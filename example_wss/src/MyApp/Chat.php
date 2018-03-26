@@ -6,9 +6,11 @@
 
 	class Chat implements MessageComponentInterface {
 		protected $clients;
+		private $curr_page;
 
 		public function __construct() {
 			$this->clients = new \SplObjectStorage;
+			$this->curr_page = 1;
 		}
 
 		public function onOpen(ConnectionInterface $conn) {
@@ -16,6 +18,9 @@
 			$this->clients->attach($conn);
 
 			echo "New connection! ({$conn->resourceId})\n";
+
+			// send current page number for initial rendering
+			$conn->send($this->curr_page);
 		}
 
 		public function onMessage(ConnectionInterface $from, $msg) {
@@ -23,10 +28,14 @@
 			echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
 				, $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
 
+			if (is_numeric($msg)) {
+				$this->curr_page = intval($msg);
+			}
+
 			foreach ($this->clients as $client) {
 				if ($from !== $client) {
 					// The sender is not the receiver, send to each client connected
-					$client->send($msg);
+					$client->send($this->curr_page);
 				}
 			}
 		}
