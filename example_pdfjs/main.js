@@ -1,12 +1,13 @@
+var testPDFName = "/389NGroupProject/static/pdf/introHTML.pdf";
 
 $(function() {
 
-    generatePDF("introHTML.pdf", parseInt($("#pdfNumber").val()));
+    generatePDF(testPDFName, parseInt($("#pdfNumber").val()));
 
     $("#pdfNumber").on("input", function() {
         var pageNum = parseInt($(this).val());
         if (pageNum) {
-            generatePDF("introHTML.pdf", pageNum);
+            generatePDF(testPDFName, pageNum);
         }
     });
 
