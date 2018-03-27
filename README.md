@@ -28,7 +28,8 @@
 - PDF Storage
 	- MySQL
 - PDF upload/download
-	- ???
+	- upload: via PHP (see Week 4 FilesTime.zip)
+	- download: ???
 - Professor login
 	- ???
 	- Can either keep track of our own usernames/passwords or use a library
