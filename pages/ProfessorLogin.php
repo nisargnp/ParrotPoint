@@ -25,8 +25,9 @@
 			Password: <input type="password" name="password"><br><br>
 
 			<input type="submit" value="Log In" name="login">
-		</form>
-		$bottom_text
+		</form><br>
+		
+		<strong>$bottom_text</strong>
 BODY;
 
 	echo renderPage("Professor Sign In", $body);

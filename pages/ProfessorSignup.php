@@ -26,7 +26,8 @@
 			Password: <input type="password" name="professor_password"><br><br>
 
 			<input type="submit" value="Register" name="register">
-		</form> <br>
+		</form><br>
+		
 		<strong>$bottom_text</strong>
 BODY;
 	
