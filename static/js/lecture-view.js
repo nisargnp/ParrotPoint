@@ -68,6 +68,45 @@ function queueRenderPage(num) {
     }
 }
 
+// Chat functions
+
+function updateScroll() {
+    var element = document.getElementById("chat-box");
+    element.scrollTop = element.scrollHeight;
+}
+
+
+var addToChatBox = function(msg, sender = "YOU") {
+    var cbl = document.getElementById("chat-box-list");
+    var nc = document.createElement("li");
+
+    var s = document.createElement("b");
+    s.appendChild(document.createTextNode(sender));
+
+    var text = document.createTextNode(": " + msg);
+
+    nc.appendChild(s);
+    nc.appendChild(text);
+    cbl.appendChild(nc);
+
+    updateScroll();
+}
+
+var sendMessage = function() {
+    var inputBox = document.getElementById("chat-text-box");
+    var msg = inputBox.value;
+    // add to chat box
+    addToChatBox(msg);
+
+    // send message
+    conn.send("chat:" + msg);
+
+    // reset input
+    inputBox.value = "";
+
+    return false;
+}
+
 $(function() {
     // Initially download PDF
     PDFJS.getDocument(defaultPDFUrl).then(function(pdfDoc_) {
@@ -80,12 +119,24 @@ $(function() {
         };
 
         conn.onmessage = function(e) {
-            if (!isNaN(e.data)) {
-                console.log(e.data);
-                queueRenderPage(parseInt(e.data));
+            var [header] = e.data.split(":", 1);
+
+            if (header == "chat") {
+                var [_, sender, message] = e.data.split(":", 3);
+                addToChatBox(message, sender);
+            } 
+            else {
+                if (!isNaN(e.data)) {
+                    console.log(e.data);
+                    queueRenderPage(parseInt(e.data));
+                }
             }
         };
     });
+
+    // correct scroll for chat box
+    updateScroll();
+
 
 });
 
