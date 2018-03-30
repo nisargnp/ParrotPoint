@@ -8,6 +8,7 @@ var conn = null;
 
 var pageRendering = false;
 var pageNumPending = null;
+var incPage = decPage = gotoLocal = gotoMaster = setMasterPage = null;
 
 var scale = 1.5;
 var canvas = document.getElementById("pdf_view");
@@ -15,13 +16,42 @@ var context = canvas.getContext('2d');
 
 // PDF Functions
 
-function changePage() {
+function makePageManager(curr) {
+    let master = parseInt(curr);
+    let local = master;
 
-    var pageNum = parseInt($("#pdfNumber").val());
+    let inc = function() {
+        local += 1;
+        queueRenderPage(local);
+    };
+
+    let dec = function() {
+        local -= 1;
+        queueRenderPage(local);
+    };
+
+    let gotoLocal = function() {
+        queueRenderPage(local);
+    }
+
+    let gotoMaster = function() {
+        queueRenderPage(master);
+    }
+
+    let setMaster = function(newMaster) {
+        master = parseInt(newMaster);
+    }    
+
+    return [inc, dec, gotoLocal, gotoMaster, setMaster];
+}
+
+function changePage(pn) {
+    let pageNum = parseInt(pn);
+
     if (pageNum) {
         generatePDF(pageNum);
         // propagate
-        conn.send(pageNum);
+        // conn.send(pageNum);
     }
     // prevent form from refreshing
     return false;
@@ -60,7 +90,9 @@ function generatePDF(pdfPage) {
     }
 }
 
-function queueRenderPage(num) {
+function queueRenderPage(n) {
+    let num = parseInt(n);
+
     if (pageRendering) {
         pageNumPending = num;
     } else {
@@ -71,19 +103,19 @@ function queueRenderPage(num) {
 // Chat functions
 
 function updateScroll() {
-    var element = document.getElementById("chat-box");
+    let element = document.getElementById("chat-box");
     element.scrollTop = element.scrollHeight;
 }
 
 
 var addToChatBox = function(msg, sender = "YOU") {
-    var cbl = document.getElementById("chat-box-list");
-    var nc = document.createElement("li");
+    let cbl = document.getElementById("chat-box-list");
+    let nc = document.createElement("li");
 
-    var s = document.createElement("b");
+    let s = document.createElement("b");
     s.appendChild(document.createTextNode(sender));
 
-    var text = document.createTextNode(": " + msg);
+    let text = document.createTextNode(": " + msg);
 
     nc.appendChild(s);
     nc.appendChild(text);
@@ -93,8 +125,8 @@ var addToChatBox = function(msg, sender = "YOU") {
 }
 
 var sendMessage = function() {
-    var inputBox = document.getElementById("chat-text-box");
-    var msg = inputBox.value;
+    let inputBox = document.getElementById("chat-text-box");
+    let msg = inputBox.value;
     // add to chat box
     addToChatBox(msg);
 
@@ -119,16 +151,24 @@ $(function() {
         };
 
         conn.onmessage = function(e) {
-            var [header] = e.data.split(":", 1);
+            let [header] = e.data.split(":", 1);
 
             if (header == "chat") {
-                var [_, sender, message] = e.data.split(":", 3);
+                let [_, sender, message] = e.data.split(":", 3);
                 addToChatBox(message, sender);
             } 
             else {
                 if (!isNaN(e.data)) {
+                    let pageNum = parseInt(e.data);
+
+                    if (gotoMaster == null) {
+                        [incPage, decPage, gotoLocal, gotoMaster, setMasterPage] = makePageManager(pageNum);
+                        queueRenderPage(pageNum);
+                    }
+                    else {
+                        setMasterPage(pageNum);
+                    }
                     console.log(e.data);
-                    queueRenderPage(parseInt(e.data));
                 }
             }
         };
@@ -139,4 +179,11 @@ $(function() {
 
 
 });
+
+/*
+TODO:
+- instructor version
+- data structures for storing connected users and their names
+- style.... haow
+*/
 

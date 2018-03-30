@@ -1,5 +1,55 @@
+#left-panel {
+	width:72%;
+	height:100%;
+	border: 2px solid red;
+	float: left;
+}
+
+#pdf_view {
+	width: 80%;
+	border: 2px solid black;
+}
+
+#right-panel {
+	width:25%;
+	height:99%;
+	border: 2px solid green;
+	float: right;
+	position: absolute;
+	top: 1px;
+	right: 1px;
+}
+
+#chat-box {
+	border: 1px dotted gray;
+	width: 90%; height: 90%;
+	position: absolute;
+	top: 2px;
+	left: 5%;
+	overflow: scroll;
+}
+
 #chat-box-list {
 	list-style-type: none;
 	padding: 0 0 0 5px;
 	margin: 3px;
 }
+
+#chat-text-box {
+	position: absolute;
+	width:75%;
+	bottom: 1px;
+	left: 5%;
+}
+
+#chat-send-btn {
+	position: absolute;
+	bottom: 1px;
+	right: 5%;
+	width: 10%;
+}
+
+.slide-control {
+	font-size: 215%;
+}
+
