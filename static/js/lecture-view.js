@@ -177,6 +177,14 @@ $(function() {
     // correct scroll for chat box
     updateScroll();
 
+    // set chat textbox / button handlers
+    document.getElementById("chat-text-box").addEventListener("keydown", function(e) {
+        if (e.keyCode == 13 && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+            return false;
+        }
+    });
 
 });
 

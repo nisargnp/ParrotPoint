@@ -28,10 +28,8 @@
         <ul id="chat-box-list"></ul>
     </div>
 
-    <form onsubmit="sendMessage(); return false;">
-        <input type="text" id="chat-text-box" />
-        <input type="submit" id="chat-send-btn" value=">" />
-    </form>
+    <textarea id="chat-text-box"></textarea>
+    <button id="chat-send-btn" onclick="sendMessage(); return false;">></button>
 </div>
 
 BODY;
