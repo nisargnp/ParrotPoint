@@ -28,14 +28,29 @@
 			echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
 				, $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
 
-			if (is_numeric($msg)) {
-				$this->curr_page = intval($msg);
-			}
+			$chunks = explode(":", $msg, 2);
+			$header = $chunks[0];
+			$payload = $chunks[1];
 
-			foreach ($this->clients as $client) {
-				if ($from !== $client) {
-					// The sender is not the receiver, send to each client connected
-					$client->send($this->curr_page);
+			if ($header == "chat") {
+				foreach ($this->clients as $client) {
+					if ($from !== $client) {
+						// The sender is not the receiver, send to each client connected
+						$client->send("chat:" . $from->resourceId . ":" . $payload);
+					}
+				}
+			}
+			else {
+
+				if (is_numeric($msg)) {
+					$this->curr_page = intval($msg);
+				}
+
+				foreach ($this->clients as $client) {
+					if ($from !== $client) {
+						// The sender is not the receiver, send to each client connected
+						$client->send($this->curr_page);
+					}
 				}
 			}
 		}
