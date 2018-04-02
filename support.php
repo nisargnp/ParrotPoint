@@ -35,7 +35,7 @@ PAGE;
         <script src="static/dist/pdf.js"></script>
         <script src="static/dist/pdf.worker.js"></script>
 
-        <link rel="stylesheet" type="text/css" href="static/css/lecture-view.css">
+        <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/css/lecture-view.css">
     
     </head>
     <body>
@@ -43,7 +43,7 @@ PAGE;
             $body
         </div>
 
-        <script type='text/javascript' src="static/js/lecture-view.js"></script>
+        <script type='text/javascript' src="/389NGroupProject/static/js/lecture-view.js"></script>
     </body>
 
 </html>

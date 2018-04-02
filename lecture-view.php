@@ -11,10 +11,10 @@
 
     $body = <<<BODY
 <div id="left-panel">
-
     <center>
         <canvas id="pdf_view"></canvas>
-        <div>
+        <div style="width:80%">
+            <label id="page-num" style="float:left;">0</label>
             <label class="slide-control" onclick="decPage()"> < </label>
             <label class="slide-control" onclick="gotoMaster()"> o </label>
             <label class="slide-control" onclick="incPage()"> > </label>

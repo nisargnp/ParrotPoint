@@ -1,7 +1,7 @@
-// RUN `php example_wss/bin/chat-server.php` in the background 
+// RUN `php websocket_server/bin/server.php` in the background 
 // before opening these test files in XAMPP
 
-var defaultPDFUrl = "/389NGroupProject/static/pdf/introHTML.pdf";
+var defaultPDFUrl = "static/pdf/introHTML.pdf";
 
 var pdfDoc = null;
 var conn = null;
@@ -45,6 +45,7 @@ function makePageManager(curr) {
     return [inc, dec, gotoLocal, gotoMaster, setMaster];
 }
 
+/*
 function changePage(pn) {
     let pageNum = parseInt(pn);
 
@@ -56,6 +57,7 @@ function changePage(pn) {
     // prevent form from refreshing
     return false;
 }
+*/
 
 function generatePDF(pdfPage) {
     if (pdfDoc != null) {
@@ -92,6 +94,10 @@ function generatePDF(pdfPage) {
 
 function queueRenderPage(n) {
     let num = parseInt(n);
+
+    // set page number label
+    let pnl = document.getElementById("page-num");
+    pnl.innerText = num;
 
     if (pageRendering) {
         pageNumPending = num;

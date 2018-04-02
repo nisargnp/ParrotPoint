@@ -15,10 +15,10 @@ body, html {
 
 #left-panel {
 	width: 72%;
-	height: 99%;
+	height: 95%;
 	/*border: 2px solid red;*/
 	float: left;
-	margin: 0;
+	margin: 3% 0 0 0;
 }
 
 #pdf_view {
@@ -39,10 +39,10 @@ body, html {
 }
 
 #chat-box {
-	/*border: 1px dotted gray;*/
-	width: 90%; height: 90%;
+	border: 1px dotted gray;
+	width: 90%; height: 85%;
 	position: absolute;
-	top: 2px;
+	top: 2%;
 	left: 5%;
 	overflow: scroll;
 }
@@ -68,6 +68,29 @@ body, html {
 	width: 10%;
 	height:8%;
 }
+/*
+#options-button {
+	margin-left: 3%;
+	border: 1px solid black;
+	display: inline-flex;
+	padding: 1% 2%;
+	background-color: lightgray;
+}
+
+#options-button:link {
+}
+
+#options-button:visited {
+}
+
+#options-button:hover {
+    background-color: black;
+}
+
+#options-button:active {
+    background-color: lightblue;
+}
+*/
 
 .slide-control {
 	font-size: 215%;
