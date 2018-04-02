@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d12bd9e3-eef9-43bd-affd-9661dd4b6bbd" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/pages/home/FrontPage.php" />
+      <change beforePath="$PROJECT_DIR$/pages/utils/utils.php" afterPath="$PROJECT_DIR$/pages/utils/utils.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FrontPage.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FrontPage.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/home/FrontPage.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="294">
-              <caret line="14" column="8" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+              <caret line="14" column="8" lean-forward="false" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
               <folding>
                 <marker date="1522706813469" expanded="true" signature="97:165" ph="..." />
                 <marker date="1522706813469" expanded="true" signature="230:298" ph="..." />
@@ -55,16 +55,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="utils.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/utils/utils.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="567">
+              <caret line="27" column="73" lean-forward="true" selection-start-line="27" selection-start-column="73" selection-end-line="27" selection-end-column="73" />
               <folding>
-                <marker date="1522704635809" expanded="true" signature="352:588" ph="..." />
-                <marker date="1522704635809" expanded="true" signature="608:701" ph="..." />
-                <marker date="1522704635809" expanded="true" signature="630:681" ph="..." />
-                <marker date="1522704635809" expanded="true" signature="2157:2199" ph="select * fro... users" />
+                <marker date="1522707072665" expanded="true" signature="352:737" ph="..." />
+                <marker date="1522707072665" expanded="true" signature="757:998" ph="..." />
+                <marker date="1522707072665" expanded="true" signature="779:978" ph="..." />
+                <marker date="1522707072665" expanded="true" signature="2454:2496" ph="select * fro... users" />
               </folding>
             </state>
           </provider>
@@ -99,6 +99,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/pages/home/FrontPage.php" />
+        <option value="$PROJECT_DIR$/pages/utils/utils.php" />
       </list>
     </option>
   </component>
@@ -199,12 +200,12 @@
       <option name="presentableId" value="Default" />
       <updated>1522705434425</updated>
       <workItem from="1522705435709" duration="284000" />
-      <workItem from="1522705963915" duration="913000" />
+      <workItem from="1522705963915" duration="1119000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1197000" />
+    <option name="totallyTimeSpent" value="1403000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="407" y="0" width="1496" height="988" extended-state="0" />
@@ -259,19 +260,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/utils/utils.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1522704635809" expanded="true" signature="352:588" ph="..." />
-            <marker date="1522704635809" expanded="true" signature="608:701" ph="..." />
-            <marker date="1522704635809" expanded="true" signature="630:681" ph="..." />
-            <marker date="1522704635809" expanded="true" signature="2157:2199" ph="select * fro... users" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/login/ProfessorSignup.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
@@ -279,6 +267,17 @@
           <folding>
             <marker date="1522704635804" expanded="true" signature="480:540" ph="insert into users... " />
             <marker date="1522704635804" expanded="true" signature="714:980" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/home/FrontPage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" column="8" lean-forward="false" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+          <folding>
+            <marker date="1522706813469" expanded="true" signature="97:165" ph="..." />
+            <marker date="1522706813469" expanded="true" signature="230:298" ph="..." />
           </folding>
         </state>
       </provider>
@@ -294,13 +293,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/home/FrontPage.php">
+    <entry file="file://$PROJECT_DIR$/pages/utils/utils.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="14" column="8" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+        <state relative-caret-position="567">
+          <caret line="27" column="73" lean-forward="true" selection-start-line="27" selection-start-column="73" selection-end-line="27" selection-end-column="73" />
           <folding>
-            <marker date="1522706813469" expanded="true" signature="97:165" ph="..." />
-            <marker date="1522706813469" expanded="true" signature="230:298" ph="..." />
+            <marker date="1522707072665" expanded="true" signature="352:737" ph="..." />
+            <marker date="1522707072665" expanded="true" signature="757:998" ph="..." />
+            <marker date="1522707072665" expanded="true" signature="779:978" ph="..." />
+            <marker date="1522707072665" expanded="true" signature="2454:2496" ph="select * fro... users" />
           </folding>
         </state>
       </provider>
