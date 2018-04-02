@@ -1,7 +1,7 @@
 <?php
 
     function generatePage($body) {
-        $page = <<<PAGE
+        $page = <<<HTML
             <!doctype html>
             <html>
                 <head> 
@@ -16,38 +16,38 @@
                     </div>
                 </body>
             </html>
-PAGE;
+HTML;
 
         return $page;
     }
 
     function generatePageWithPDF($body) {
-        $page = <<<PAGE
+        $page = <<<HTML
 <!doctype html>
-<html>
-    <head>
-        <script
-            src="https://code.jquery.com/jquery-3.3.1.js"
-            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-            crossorigin="anonymous">
-        </script>
+    <html>
+        <head>
+            <script
+                src="https://code.jquery.com/jquery-3.3.1.js"
+                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+                crossorigin="anonymous">
+            </script>
 
-        <script src="static/dist/pdf.js"></script>
-        <script src="static/dist/pdf.worker.js"></script>
+            <script src="static/dist/pdf.js"></script>
+            <script src="static/dist/pdf.worker.js"></script>
 
-        <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/css/lecture-view.css">
-    
-    </head>
-    <body>
-        <div id="main">
-            $body
-        </div>
+            <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/css/lecture-view.css">
+        
+        </head>
+        <body>
+            <div id="main">
+                $body
+            </div>
 
-        <script type='text/javascript' src="/389NGroupProject/static/js/lecture-view.js"></script>
-    </body>
+            <script type='text/javascript' src="/389NGroupProject/static/js/lecture-view.js"></script>
+        </body>
 
-</html>
-PAGE;
+    </html>
+HTML;
 
         return $page;
     }

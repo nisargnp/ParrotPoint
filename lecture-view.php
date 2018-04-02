@@ -9,7 +9,7 @@
     // header("Pragma: no-cache"); // HTTP 1.0.
     // header("Expires: 0"); // Proxies.
 
-    $body = <<<BODY
+    $body = <<<HTML
 <div id="left-panel">
     <center>
         <canvas id="pdf_view"></canvas>
@@ -36,7 +36,7 @@
     <button id="chat-send-btn" onclick="sendMessage(); return false;">></button>
 </div>
 
-BODY;
+HTML;
 
     echo generatePageWithPDF($body);
 
