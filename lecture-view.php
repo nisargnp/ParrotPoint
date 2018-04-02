@@ -20,6 +20,10 @@
             <label class="slide-control" onclick="incPage()"> > </label>
         </div>
     </center>
+
+    <div style="float: right;">
+        
+    </div>
 </div>
 
 <div id="right-panel">

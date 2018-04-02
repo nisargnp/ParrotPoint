@@ -9,6 +9,7 @@ var conn = null;
 var pageRendering = false;
 var pageNumPending = null;
 var incPage = decPage = gotoLocal = gotoMaster = setMasterPage = null;
+var numPages = 0;
 
 var scale = 1.5;
 var canvas = document.getElementById("pdf_view");
@@ -21,13 +22,18 @@ function makePageManager(curr) {
     let local = master;
 
     let inc = function() {
-        local += 1;
-        queueRenderPage(local);
+        // how to get max page
+        if (local < numPages) {
+            local += 1;
+            queueRenderPage(local);
+        }
     };
 
     let dec = function() {
-        local -= 1;
-        queueRenderPage(local);
+        if (local > 1) {
+            local -= 1;
+            queueRenderPage(local);
+        }
     };
 
     let gotoLocal = function() {
@@ -35,6 +41,7 @@ function makePageManager(curr) {
     }
 
     let gotoMaster = function() {
+        local = master;
         queueRenderPage(master);
     }
 
@@ -95,6 +102,10 @@ function generatePDF(pdfPage) {
 function queueRenderPage(n) {
     let num = parseInt(n);
 
+    console.log(num);
+    if (num < 1)
+        return;
+
     // set page number label
     let pnl = document.getElementById("page-num");
     pnl.innerText = num;
@@ -149,6 +160,8 @@ $(function() {
     // Initially download PDF
     PDFJS.getDocument(defaultPDFUrl).then(function(pdfDoc_) {
         pdfDoc = pdfDoc_;
+
+        numPages = pdfDoc.pdfInfo.numPages;
 
         // Setup Web Socket
         conn = new WebSocket('ws://localhost:3001');
