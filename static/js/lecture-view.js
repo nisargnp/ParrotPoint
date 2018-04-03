@@ -143,16 +143,19 @@ var addToChatBox = function(msg, sender = "YOU") {
 var sendMessage = function() {
     let inputBox = document.getElementById("chat-text-box");
     let msg = inputBox.value;
-    // add to chat box
-    addToChatBox(msg);
 
-    // send message
-    conn.send("chat:" + msg);
+    if (msg != "") {
+        // add to chat box
+        addToChatBox(msg);
 
-    // reset input
-    inputBox.value = "";
+        // send message
+        conn.send("chat:" + msg);
 
-    return false;
+        // reset input
+        inputBox.value = "";
+
+        return false;
+    }
 }
 
 $(function() {

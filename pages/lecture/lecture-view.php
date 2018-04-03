@@ -15,9 +15,9 @@
         <canvas id="pdf_view"></canvas>
         <div style="width:80%">
             <label id="page-num" style="float:left;">0</label>
-            <label class="slide-control" onclick="decPage()"> < </label>
-            <label class="slide-control" onclick="gotoMaster()"> o </label>
-            <label class="slide-control" onclick="incPage()"> > </label>
+            <button class="slide-control" onclick="decPage()"> < </button>
+            <button class="slide-control" onclick="gotoMaster()"> o </button>
+            <button class="slide-control" onclick="incPage()"> > </button>
         </div>
     </center>
 
