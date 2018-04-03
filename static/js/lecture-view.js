@@ -1,7 +1,7 @@
 // RUN `php websocket_server/bin/server.php` in the background 
 // before opening these test files in XAMPP
 
-var defaultPDFUrl = "static/pdf/introHTML.pdf";
+var defaultPDFUrl = "/389NGroupProject/static/pdf/introHTML.pdf";
 
 var pdfDoc = null;
 var conn = null;
@@ -102,7 +102,6 @@ function generatePDF(pdfPage) {
 function queueRenderPage(n) {
     let num = parseInt(n);
 
-    console.log(num);
     if (num < 1)
         return;
 
@@ -211,6 +210,6 @@ $(function() {
 TODO:
 - instructor version
 - data structures for storing connected users and their names
-- style.... haow
+- style.... haow - bootstrap, redo style with bootstrap
 */
 

@@ -1,6 +1,6 @@
 <?php
     
-    require("support.php");
+    require("../utils/utils.php");
 
     // Disable Caching since PDF.js fails sometimes because of it
     // have to do for whatever endpoint serves the PDFs
