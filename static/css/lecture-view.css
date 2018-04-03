@@ -59,6 +59,7 @@ body, html {
 	bottom: 1px;
 	left: 5%;
 	height:8%;
+	resize: none;
 }
 
 #chat-send-btn {
@@ -94,5 +95,13 @@ body, html {
 
 .slide-control {
 	font-size: 215%;
+	background: none;
+	border: none;
 }
+
+.slide-control:hover {
+	font-weight: bold;
+}
+
+
 

@@ -1,7 +1,7 @@
 // RUN `php websocket_server/bin/server.php` in the background 
 // before opening these test files in XAMPP
 
-var defaultPDFUrl = "static/pdf/introHTML.pdf";
+var defaultPDFUrl = "/389NGroupProject/static/pdf/introHTML.pdf";
 
 var pdfDoc = null;
 var conn = null;
@@ -9,6 +9,7 @@ var conn = null;
 var pageRendering = false;
 var pageNumPending = null;
 var incPage = decPage = gotoLocal = gotoMaster = setMasterPage = null;
+var numPages = 0;
 
 var scale = 1.5;
 var canvas = document.getElementById("pdf_view");
@@ -21,13 +22,18 @@ function makePageManager(curr) {
     let local = master;
 
     let inc = function() {
-        local += 1;
-        queueRenderPage(local);
+        // how to get max page
+        if (local < numPages) {
+            local += 1;
+            queueRenderPage(local);
+        }
     };
 
     let dec = function() {
-        local -= 1;
-        queueRenderPage(local);
+        if (local > 1) {
+            local -= 1;
+            queueRenderPage(local);
+        }
     };
 
     let gotoLocal = function() {
@@ -35,6 +41,7 @@ function makePageManager(curr) {
     }
 
     let gotoMaster = function() {
+        local = master;
         queueRenderPage(master);
     }
 
@@ -95,6 +102,9 @@ function generatePDF(pdfPage) {
 function queueRenderPage(n) {
     let num = parseInt(n);
 
+    if (num < 1)
+        return;
+
     // set page number label
     let pnl = document.getElementById("page-num");
     pnl.innerText = num;
@@ -133,22 +143,27 @@ var addToChatBox = function(msg, sender = "YOU") {
 var sendMessage = function() {
     let inputBox = document.getElementById("chat-text-box");
     let msg = inputBox.value;
-    // add to chat box
-    addToChatBox(msg);
 
-    // send message
-    conn.send("chat:" + msg);
+    if (msg != "") {
+        // add to chat box
+        addToChatBox(msg);
 
-    // reset input
-    inputBox.value = "";
+        // send message
+        conn.send("chat:" + msg);
 
-    return false;
+        // reset input
+        inputBox.value = "";
+
+        return false;
+    }
 }
 
 $(function() {
     // Initially download PDF
     PDFJS.getDocument(defaultPDFUrl).then(function(pdfDoc_) {
         pdfDoc = pdfDoc_;
+
+        numPages = pdfDoc.pdfInfo.numPages;
 
         // Setup Web Socket
         conn = new WebSocket('ws://localhost:3001');
@@ -198,6 +213,6 @@ $(function() {
 TODO:
 - instructor version
 - data structures for storing connected users and their names
-- style.... haow
+- style.... haow - bootstrap, redo style with bootstrap
 */
 

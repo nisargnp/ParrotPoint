@@ -1,0 +1,13 @@
+body {
+    background-color: #EFD8BA;
+    background-size: 100%;
+}
+
+#main {
+    width: 100%;
+    height: 100%;
+    /*border: 2px purple solid;*/
+    display: inline-block;
+    position: relative;
+    margin: 0;
+}

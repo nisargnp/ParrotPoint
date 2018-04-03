@@ -18,6 +18,7 @@
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="../../static/css/Default.css" type="text/css" />
                 <title>{$title}</title>
             </head>
 
@@ -32,6 +33,45 @@ BODY;
         return $page;
     }
 
+    /*
+     * Generate page body with PDF library included
+     */
+
+    function generatePageWithPDF($body) {
+        $page = <<<HTML
+<!doctype html>
+    <html>
+        <head>
+            <script
+                src="https://code.jquery.com/jquery-3.3.1.js"
+                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+                crossorigin="anonymous">
+            </script>
+
+            <script src="/389NGroupProject/static/dist/pdf.js"></script>
+            <script src="/389NGroupProject/static/dist/pdf.worker.js"></script>
+
+            <link href="/389NGroupProject/static/dist/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+            <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/css/lecture-view.css">
+        
+        </head>
+        <body>
+            <div id="main">
+                $body
+            </div>
+
+            <script src="/389NGroupProject/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
+            <script src="/389NGroupProject/static/dist/bootstrap/js/bootstrap.min.js"></script>
+            <script type='text/javascript' src="/389NGroupProject/static/js/lecture-view.js"></script>
+
+        </body>
+
+    </html>
+HTML;
+
+        return $page;
+    }
 
 // -------------Database Interaction Functions----------------
      
