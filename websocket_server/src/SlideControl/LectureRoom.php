@@ -8,17 +8,33 @@
             private $users;
             private $professor;
             private $connections;
+            private $currPage;
 
             public function __construct() {
                 $this->professor = NULL;
                 $this->users = array();
                 $this->connections = array();
+                $this->currPage = 1;
             }
+
+            // professor
 
             public function setProfessor($prof_id) {
                 echo "setting professor {$prof_id}\n";
                 $this->professor = $prof_id;
             }
+
+            public function isProfessor($id) {
+                echo "checking professor {$id}\n";
+                if ($this->professor == $id) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+
+            // users
 
             public function addUser($id, $conn) {
                 echo "adding user {$id}\n";
@@ -26,9 +42,19 @@
                 $this->connections[$id] = $conn;
             }
 
+            public function removeUser($id) {
+                echo "removing user {$id}\n";
+                if (isset($this->users[$id])) {
+                    unset($this->users[$id]);
+                    unset($this->connections[$id]);
+                }
+            }
+
             public function getConnections() {
                 return array_values($this->connections);
             }
+
+            // chat
 
             public function getName($id) {
                 return $this->users[$id];
@@ -45,12 +71,16 @@
                 }
             }
 
-            public function removeUser($id) {
-                echo "removing user {$id}\n";
-                if (isset($this->users[$id])) {
-                    unset($this->users[$id]);
-                    unset($this->connections[$id]);
-                }
+            // lecture pages
+
+            public function getPage() {
+                echo "getting page\n";
+                return $this->currPage;
+            }
+
+            public function setPage($n) {
+                echo "setting new page {$n}\n";
+                $this->currPage = $n;
             }
         }
     }

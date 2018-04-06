@@ -7,13 +7,11 @@
 
 	class SlideMessageHandler implements MessageComponentInterface {
 		protected $clients;
-		private $curr_page;
 
 		private $one_room_for_now;
 
 		public function __construct() {
 			$this->clients = new \SplObjectStorage;
-			$this->curr_page = 1;
 			$this->one_room_for_now = new LectureRoom;
 		}
 
@@ -28,7 +26,7 @@
 			$this->one_room_for_now->addUser($conn->resourceId, $conn);
 
 			// send current page number for initial rendering
-			$conn->send($this->curr_page);
+			$conn->send($this->one_room_for_now->getPage());
 		}
 
 		public function onMessage(ConnectionInterface $from, $msg) {
@@ -57,14 +55,16 @@
 				$this->one_room_for_now->setProfessor($from->resourceId);
 			}
 			else {
-				if (is_numeric($msg)) {
-					$this->curr_page = intval($msg);
-				}
+				if ($this->one_room_for_now->isProfessor($from->resourceId)) {
+					if (is_numeric($msg)) {
+						$this->one_room_for_now->setPage(intval($msg));
+					}
 
-				foreach ($this->clients as $client) {
-					if ($from !== $client) {
-						// The sender is not the receiver, send to each client connected
-						$client->send($this->curr_page);
+					foreach ($this->one_room_for_now->getConnections() as $client) {
+						if ($from !== $client) {
+							// The sender is not the receiver, send to each client connected
+							$client->send($this->one_room_for_now->getPage());
+						}
 					}
 				}
 			}

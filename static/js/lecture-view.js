@@ -48,6 +48,7 @@ function makePageManager(curr) {
     }
 
     let setMaster = function(newMaster) {
+        console.log("Got new master page");
         master = parseInt(newMaster);
     }    
 
@@ -96,6 +97,11 @@ function generatePDF(pdfPage) {
 
                 // set input element's new value
                 $("#pdfNumber").val(pdfPage);
+
+                if (isProfessor) {
+                    // update page num if u are professor
+                    conn.send(pdfPage);
+                }
 
             });
     }
@@ -177,6 +183,7 @@ function setProfessor() {
     
     // but we need other pages to be made b4 this. so for now lets just send this
     conn.send("auth-professor:1");
+    isProfessor = true;
 }
 
 $(function() {
