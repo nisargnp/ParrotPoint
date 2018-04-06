@@ -15,6 +15,8 @@ var scale = 1.5;
 var canvas = document.getElementById("pdf_view");
 var context = canvas.getContext('2d');
 
+var isProfessor = false;
+
 // PDF Functions
 
 function makePageManager(curr) {
@@ -156,6 +158,25 @@ var sendMessage = function() {
 
         return false;
     }
+}
+
+// call this right when page loads to set user name given form other page
+function setChatName(name) {
+    // assuming input has been sanitized by somewhere else
+    conn.send("set-name:" + name);
+}
+
+// professor stuff
+
+function setProfessor() {
+    // after login prof starts a php session
+    // when prof starts a lecture send session_id() to wss to be stored
+        // map session id to random code generated
+    // here, we will send session_id() + lecture code to be validated
+    // prevents students from sending a similar message and becoming professor
+    
+    // but we need other pages to be made b4 this. so for now lets just send this
+    conn.send("auth-professor:1");
 }
 
 $(function() {
