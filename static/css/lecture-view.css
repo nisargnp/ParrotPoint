@@ -93,6 +93,10 @@ body, html {
 }
 */
 
+#page-num {
+	float:left;
+}
+
 .slide-control {
 	font-size: 215%;
 	background: none;

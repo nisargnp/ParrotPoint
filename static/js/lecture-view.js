@@ -212,6 +212,8 @@ $(function() {
 /*
 TODO:
 - instructor version
+    - dropUp bootstrap options button
+    - professor has polls - call nisarg's methods
 - data structures for storing connected users and their names
 - style.... haow - bootstrap, redo style with bootstrap
 */

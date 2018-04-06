@@ -25,7 +25,7 @@ require_once("../utils/utils.php");
         </form>
         <h4>or</h4>
         <form action="../login/ProfessorLogin.php?" method="post">
-			<button type="submit" class = 'btn btn-white' name = "login">Login as Professor</button>
+			<button type="submit" class = 'btn btn-white'>Login as Professor</button>
 		</form>
         </div>
 		</div>
