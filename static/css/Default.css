@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5, h6, input {
     font-family: montserrat,"helvetica neue",helvetica,arial,sans-serif;
     font-weight: 700;
 }
-h4, input.username {
+h4, input.username,input.usernameInvalid {
     font-size: 20px;
 }
 .logo-container {
@@ -55,6 +55,20 @@ input.username {
     border-left-color: rgb(204, 204, 204);
     border-left-style: solid;
     border-left-width: 0.125rem;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    border-radius: 0;
+    -webkit-appearance: none;
+    height: 50px;
+    line-height: 50px;
+    color: #333;
+    text-align: center;
+}
+input.usernameInvalid {
+    border: .125rem solid red;
     border-image-source: initial;
     border-image-slice: initial;
     border-image-width: initial;
