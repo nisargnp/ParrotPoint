@@ -27,6 +27,15 @@
 
 			// send current page number for initial rendering
 			$conn->send($this->one_room_for_now->getPage());
+
+			// send chat welcome message
+			$conn->send("chat:Professor:Welcome to the chat!");
+
+			// send polling status
+			if ($this->one_room_for_now->currentlyPolling()) {
+				$conn->send("polling:active");
+			}
+
 		}
 
 		public function onMessage(ConnectionInterface $from, $msg) {
@@ -34,9 +43,12 @@
 			echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
 				, $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
 
+			// get message type
 			$chunks = explode(":", $msg, 2);
 			$header = $chunks[0];
-			$payload = $chunks[1];
+			$payload = $chunks[1] ?? "";
+
+			print_r($chunks);
 
 			if ($header == "chat") {
 				foreach ($this->one_room_for_now->getConnections() as $client) {
@@ -54,6 +66,39 @@
 			else if ($header == "auth-professor") {
 				$this->one_room_for_now->setProfessor($from->resourceId);
 			}
+
+			// from professor client -> sends this msg to start polling
+			else if ($header == "polling-start" /*&& $this->one_room_for_now->isProfessor($from->resourceId)*/) {
+				echo "polling-start\n";
+				$numAnswers = 4;
+				$this->one_room_for_now->startPolling();
+				foreach ($this->one_room_for_now->getConnections() as $conn) {
+					$conn->send("polling:start:$numAnswers");
+				}
+			}
+
+			// from professor client -> sends this msg to stop polling
+			else if ($header == "polling-stop" /*&& $this->one_room_for_now->isProfessor($from->resourceId)*/) {
+				echo "polling-stop\n";
+				$this->one_room_for_now->stopPolling();
+				foreach ($this->one_room_for_now->getConnections() as $conn) {
+					$conn->send("polling:stop");
+					$polling_results = $this->one_room_for_now->getResults();
+
+					// todo: remove hardcode
+					//$polling_results = Array(1,12,7,3);
+
+					$conn->send("polling:results:" . json_encode($polling_results));
+				}
+			}
+
+			// from student client -> polling reply
+			else if ($header == "polling-reply") {
+				echo "polling-reply\n";
+				$data = json_decode($payload);
+				$this->one_room_for_now->updateResults($data);
+			}
+
 			else {
 				if ($this->one_room_for_now->isProfessor($from->resourceId)) {
 					if (is_numeric($msg)) {
@@ -84,4 +129,5 @@
 
 			$conn->close();
 		}
+
 	}

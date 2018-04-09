@@ -79,7 +79,8 @@ else {
 		
 		<div>
 		<div class ="logo-container">
-		<div class = "logo center-block">
+		<!--div class = "logo center-block"-->
+		<img src="http://cultofthepartyparrot.com/parrots/hd/parrot.gif">
 		</div>
 		</div>
 		<form action = "{$_SERVER['PHP_SELF']}" method = "post">

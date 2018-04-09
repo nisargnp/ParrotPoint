@@ -10,14 +10,10 @@
     // header("Expires: 0"); // Proxies.
 
     $start_polling = <<<HTML
-<li><a onclick="nisargsStartFunction()"><b>Start Polling</b></a></li>
+        <li><a id='polling' onclick='startPolling()'>Start Polling</a></li>
 HTML;
 
-    $stop_polling = <<<HTML
-<li><a onclick="nisargsStopFunction()"><b>Stop Polling</b></a></li>
-HTML;
-
-    $polling_option = ""; // empty for student, start/stop_polling for prof
+    $polling_option = "$start_polling"; // empty for student, start/stop_polling for prof
 
     $body = <<<HTML
 <div id="left-panel">
@@ -54,6 +50,14 @@ HTML;
 
     <textarea id="chat-text-box"></textarea>
     <button id="chat-send-btn" onclick="sendMessage(); return false;">></button>
+</div>
+
+<!-- Graph Popup -->
+<div id="graph-popup">
+    <div id="popup-info">
+        <span id="popup-close" onclick='graphClose()'>&times;</span>
+        <div id="popup-canvas-div"></div>
+    </div>
 </div>
 
 HTML;

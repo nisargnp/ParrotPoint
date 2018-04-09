@@ -10,11 +10,17 @@
             private $connections;
             private $currPage;
 
+            private $polling;
+            private $latestPollingResults;
+
             public function __construct() {
                 $this->professor = NULL;
                 $this->users = array();
                 $this->connections = array();
                 $this->currPage = 1;
+
+                $this->polling = False;
+                $this->latestPollingResults = Array(0, 0, 0, 0);
             }
 
             // professor
@@ -82,6 +88,31 @@
                 echo "setting new page {$n}\n";
                 $this->currPage = $n;
             }
+
+            public function startPolling() {
+                $this->polling = True;
+                $this->latestPollingResults = Array(0, 0, 0, 0);
+            }
+
+            public function stopPolling() {
+                $this->polling = false;
+            }
+
+            public function currentlyPolling() {
+                return $this->polling;
+            }
+
+            public function updateResults(array $updates) {
+                print_r($this->latestPollingResults);
+                foreach ($updates as $index=>$update) {
+                    $this->latestPollingResults[$index] += $update;
+                }
+            }
+
+            public function getResults() {
+                return $this->latestPollingResults;
+            }
+
         }
     }
 

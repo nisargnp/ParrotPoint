@@ -1,6 +1,12 @@
 // RUN `php websocket_server/bin/server.php` in the background 
 // before opening these test files in XAMPP
 
+/*
+TODO:
+- data structures for storing connected users and their names
+- style.... haow - bootstrap, redo style with bootstrap
+*/
+
 var defaultPDFUrl = "/389NGroupProject/static/pdf/introHTML.pdf";
 
 var pdfDoc = null;
@@ -16,6 +22,8 @@ var canvas = document.getElementById("pdf_view");
 var context = canvas.getContext('2d');
 
 var isProfessor = false;
+
+var savedChat = "";
 
 // PDF Functions
 
@@ -200,12 +208,107 @@ $(function() {
         };
 
         conn.onmessage = function(e) {
+
+            console.log(e.data);
+
             let [header] = e.data.split(":", 1);
 
             if (header == "chat") {
                 let [_, sender, message] = e.data.split(":", 3);
                 addToChatBox(message, sender);
             } 
+
+            // polling
+            else if (header == "polling") {
+
+                let [_, action, info] = e.data.split(":", 3);
+                console.log(e.data.split(":", 3));
+
+                // polling start
+                if (action == "start") {
+                    
+                    // save and disable chat
+                    savedChat = document.getElementById("chat-box").innerHTML;
+                    document.getElementById("chat-text-box").disabled = true;
+                    document.getElementById("chat-send-btn").disabled = false;
+
+                    // update send button
+                    document.getElementById("chat-send-btn").setAttribute("onclick", "sendPoll(); return false;");
+
+                    // replace chat w/ poll
+                    numAnswers = parseInt(info);
+
+                    document.getElementById("chat-box").innerHTML = "<h3>Select Answer:</h3>";
+                    let form = document.createElement("form");
+                    for (let i = 0; i < numAnswers; i++) {
+
+                        let space3 = "&nbsp;&nbsp;&nbsp";
+
+                        let label = document.createElement("label");
+                        label.innerHTML = "<strong>" + space3 + i + "</strong>"; 
+
+                        let radio = document.createElement("input");
+                        radio.setAttribute("type", "radio");
+                        radio.setAttribute("name", "radio-poll");
+                        radio.setAttribute("value", "" + i);
+                        if (i == 0) {
+                            radio.setAttribute("checked", "checked");
+                        }
+
+                        form.appendChild(radio);
+                        form.appendChild(label);
+                        form.appendChild(document.createElement("br"));
+
+                    }
+
+                    document.getElementById("chat-box").appendChild(form);
+                    
+                }
+
+                // polling stop
+                else if (action == "stop") {
+
+                    console.log("restoring chat: " + savedChat);
+
+                    // restore chat
+                    if (savedChat.length > 0) {
+                        document.getElementById("chat-box").innerHTML = savedChat;
+                    }
+
+                    // restore send button
+                    document.getElementById("chat-send-btn").disabled = false;
+                    document.getElementById("chat-send-btn").setAttribute("onclick", "sendMessage(); return false;");
+
+                    // enable chat
+                    document.getElementById("chat-text-box").disabled = false;
+
+                }
+
+                // existing poll -> client cannot join
+                else if (action == "active") {
+                    savedChat = document.getElementById("chat-box").innerHTML;
+                    deactivateChatAfterPoll("Poll currently active.");
+                }
+
+                // polling results
+                else if (action == "results") {
+
+                    console.log("results:");
+                    console.log(info);
+
+                    let results = JSON.parse(info);
+
+                    let labels = [];
+                    for (let i = 0; i < results.length; i++) {
+                        labels[i] = "" + i;
+                    }
+
+                    createAndDisplayGraph(results, labels);
+
+                }
+
+            }
+
             else {
                 if (!isNaN(e.data)) {
                     let pageNum = parseInt(e.data);
@@ -237,12 +340,125 @@ $(function() {
 
 });
 
-/*
-TODO:
-- instructor version
-    - dropUp bootstrap options button
-    - professor has polls - call nisarg's methods
-- data structures for storing connected users and their names
-- style.... haow - bootstrap, redo style with bootstrap
-*/
+var startPolling = function() {
+    console.log("start polling");
+    document.getElementById("polling").textContent = "Stop Polling";
+    document.getElementById("polling").onclick = stopPolling;
+    conn.send("polling-start");
+}
+
+var stopPolling = function() {
+    console.log("stop polling");
+    document.getElementById("polling").textContent = "Start Polling";
+    document.getElementById("polling").onclick = startPolling;
+    conn.send("polling-stop");
+}
+
+var graphClose = function() {
+    document.getElementById('graph-popup').style.display = "none";
+};
+
+var sendPoll = function() {
+
+    let numChoices = $("input[name=radio-poll]").length;
+    let choice = parseInt($("input[name=radio-poll]:checked").val());
+
+    results = []
+    for (let i = 0; i < numChoices; i++) {
+        results[i] = i == choice ? 1 : 0;
+    }
+
+    console.log("Sending poll results:");
+    console.log(results);
+
+    conn.send("polling-reply:" + JSON.stringify(results));
+
+    deactivateChatAfterPoll("Sent!");
+
+}
+
+function deactivateChatAfterPoll(msg = "") {
+
+    document.getElementById("chat-text-box").disabled = true;
+    document.getElementById("chat-send-btn").disabled = true;
+
+    if (msg.length > 0) {
+        msg += "<br><br>";
+    }
+
+    let strEle = document.createElement("strong");
+    strEle.innerHTML = msg + "Chat disabled until polling is over.<br>";
+    
+    document.getElementById("chat-box").innerText = "";
+    document.getElementById("chat-box").appendChild(strEle);
+
+}
+
+function createAndDisplayGraph(results, labels) {
+    
+    // create canvas
+    document.getElementById("popup-canvas-div").innerHTML = '<canvas id="popup-canvas"></canvas>';
+
+    // get ref to canvas
+    let ctx = document.getElementById("popup-canvas").getContext('2d');
+
+    // crate graph
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: results,
+                backgroundColor: [
+                    'rgba(255, 0, 0, 0.2)',
+                    'rgba(0, 255, 0, 0.2)',
+                    'rgba(0, 0, 255, 0.2)',
+                    'rgba(0, 0, 0, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 0, 0, 0.2)',
+                    'rgba(0, 255, 0, 0.2)',
+                    'rgba(0, 0, 255, 0.2)',
+                    'rgba(0, 0, 0, 0.2)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                position: "top",
+                text: "Polling Results",
+                fontSize: 20,
+                fontColor: "#aaa"
+            },
+            legend: {
+                display: false
+            },
+            scales: {
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Number of Students'
+                },
+                ticks: {
+                    beginAtZero: true,
+                    callback: function(value) {if (value % 1 === 0) {return value;}}
+                }
+              }],
+              xAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Questions'
+                }
+              }]
+            }     
+          }
+          
+    });
+
+    // display graph popup
+    document.getElementById('graph-popup').style.display = "block";
+}
 
