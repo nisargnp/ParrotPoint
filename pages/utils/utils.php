@@ -10,26 +10,31 @@
      * returns string containing html for the page
      */ 
     function renderPage($title, $body) {
-        $page = <<<BODY
+        $page = <<<HTML
             <!doctype html>
+            <html>
             <head>
                 <meta charset="utf-8" /> 
+
                 <!-- for responsive page -->
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-                <link rel="stylesheet" href="../../static/css/Default.css" type="text/css" />
+
+                <link href="/389NGroupProject/static/dist/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="/389NGroupProject/static/css/Default.css" type="text/css" />
+
                 <title>{$title}</title>
             </head>
 
             <body>
-                <div>
+                <div ng-view>
                     {$body}
-                    <script src="bootstrap/jquery-3.2.1.min.js"></script>
-                    <script src="bootstrap/js/bootstrap.min.js"></script>
                 </div>
+                    <script src="/389NGroupProject/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
+                    <script src="/389NGroupProject/static/dist/bootstrap/js/bootstrap.min.js"></script>
             </body>
-BODY;
+</html>
+HTML;
         return $page;
     }
 
@@ -42,11 +47,7 @@ BODY;
 <!doctype html>
     <html>
         <head>
-            <script
-                src="https://code.jquery.com/jquery-3.3.1.js"
-                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-                crossorigin="anonymous">
-            </script>
+            <script src="/389NGroupProject/static/dist/Chart.bundle.min.js"></script>
 
             <script src="/389NGroupProject/static/dist/pdf.js"></script>
             <script src="/389NGroupProject/static/dist/pdf.worker.js"></script>
