@@ -3,8 +3,11 @@
 
 /*
 TODO:
-- data structures for storing connected users and their names
-- style.... haow - bootstrap, redo style with bootstrap
+- make blank pages for name enter and professor dashboard
+- make a url to query a pdf via a name
+- use post and sessions to redirect from above to here
+- implement professor session check in the DB on the WSS
+- separate professor and student view for this page
 */
 
 var defaultPDFUrl = "/389NGroupProject/static/pdf/introHTML.pdf";

@@ -9,6 +9,19 @@
     // header("Pragma: no-cache"); // HTTP 1.0.
     // header("Expires: 0"); // Proxies.
 
+    $output = "";
+
+    if (isset($_POST["professorSubmit"]) && isset($_POST["name"]) && isset($_POST["pdfName"])) {
+        $output .= $_POST["name"] .= $_POST["pdfName"];
+    }
+    else if (isset($_POST["studentSubmit"]) && isset($_POST["name"]) && isset($_POST["code"])) {
+        $output .= $_POST["name"] .= $_POST["code"];
+    }
+    else {
+        $output .= "Bad Form Submit";
+    }
+
+
     $start_polling = <<<HTML
         <li><a id='polling' onclick='startPolling()'>Start Polling</a></li>
 HTML;
@@ -16,6 +29,7 @@ HTML;
     $polling_option = "$start_polling"; // empty for student, start/stop_polling for prof
 
     $body = <<<HTML
+$output
 <div id="left-panel">
     <center>
         <canvas id="pdf_view"></canvas>
@@ -33,8 +47,11 @@ HTML;
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <!-- for the code have an inner expandable with code put in via PHP variable -->
             <li><a onclick="console.log('code'); return false;">Lecture Code</a></li>
+            <!-- wtf do i do here -->
             <li><a onclick="#">Download</a></li>
+            <!-- nothing for student -->
             $polling_option
             <li role="separator" class="divider"></li>
             <li><a href="/389NGroupProject/pages/home/FrontPage.php">Exit</a></li>

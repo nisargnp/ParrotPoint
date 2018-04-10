@@ -46,7 +46,8 @@
 			// get message type
 			$chunks = explode(":", $msg, 2);
 			$header = $chunks[0];
-			$payload = $chunks[1] ?? "";
+			# I don't have PHP7...
+			$payload = array_key_exists(1, $chunks) ? $chunks[1] : "";
 
 			print_r($chunks);
 
