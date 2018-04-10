@@ -1,5 +1,6 @@
 <?php
 	require_once("../utils/utils.php");
+	session_start();
 
 	$body = ""; 
 	$db_connection = dbConnect();
