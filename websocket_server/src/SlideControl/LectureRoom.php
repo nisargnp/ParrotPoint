@@ -9,18 +9,28 @@
             private $professor;
             private $connections;
             private $currPage;
+            private $session_id;
 
             private $polling;
             private $latestPollingResults;
 
             public function __construct() {
+                echo "making new room\n";
                 $this->professor = NULL;
                 $this->users = array();
                 $this->connections = array();
                 $this->currPage = 1;
+                $this->session_id = NULL;
 
                 $this->polling = False;
                 $this->latestPollingResults = Array(0, 0, 0, 0);
+            }
+
+            public function setSessionId($id) {
+                if ($this->session_id == NULL) {
+                    echo "setting session id {$id}\n";
+                    $this->session_id = $id;
+                }
             }
 
             // professor

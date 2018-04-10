@@ -9,10 +9,12 @@
 		protected $clients;
 
 		private $one_room_for_now;
+		private $room_list;
 
 		public function __construct() {
 			$this->clients = new \SplObjectStorage;
 			$this->one_room_for_now = new LectureRoom;
+			$this->room_list = array();
 		}
 
 		public function onOpen(ConnectionInterface $conn) {
@@ -100,16 +102,25 @@
 				$this->one_room_for_now->updateResults($data);
 			}
 
-			else {
-				if ($this->one_room_for_now->isProfessor($from->resourceId)) {
-					if (is_numeric($msg)) {
-						$this->one_room_for_now->setPage(intval($msg));
-					}
+			else if ($header == "make-room") {
+				$spl = explode(":", $payload, 2);
+				$code = $spl[0];
+				echo "new room with code {$code}\n";
+				$this->room_list[$code] = new LectureRoom;
+				$this->room_list[$code]->setSessionId($spl[1]);
+			}
 
-					foreach ($this->one_room_for_now->getConnections() as $client) {
-						if ($from !== $client) {
-							// The sender is not the receiver, send to each client connected
-							$client->send($this->one_room_for_now->getPage());
+			else {
+				if (is_numeric($msg)) {
+					if ($this->one_room_for_now->isProfessor($from->resourceId)) {
+							
+						$this->one_room_for_now->setPage(intval($msg));
+
+						foreach ($this->one_room_for_now->getConnections() as $client) {
+							if ($from !== $client) {
+								// The sender is not the receiver, send to each client connected
+								$client->send($this->one_room_for_now->getPage());
+							}
 						}
 					}
 				}

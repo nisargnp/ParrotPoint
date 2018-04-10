@@ -3,11 +3,11 @@
 
 /*
 TODO:
-- make blank pages for name enter and professor dashboard
-- make a url to query a pdf via a name
-- use post and sessions to redirect from above to here
 - implement professor session check in the DB on the WSS
 - separate professor and student view for this page
+
+- LATER: make a url to query a pdf via a name
+
 */
 
 var defaultPDFUrl = "/389NGroupProject/static/pdf/introHTML.pdf";
@@ -65,20 +65,6 @@ function makePageManager(curr) {
 
     return [inc, dec, gotoLocal, gotoMaster, setMaster];
 }
-
-/*
-function changePage(pn) {
-    let pageNum = parseInt(pn);
-
-    if (pageNum) {
-        generatePDF(pageNum);
-        // propagate
-        // conn.send(pageNum);
-    }
-    // prevent form from refreshing
-    return false;
-}
-*/
 
 function generatePDF(pdfPage) {
     if (pdfDoc != null) {

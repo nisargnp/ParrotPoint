@@ -11,8 +11,8 @@
 
     $output = "";
 
-    if (isset($_POST["professorSubmit"]) && isset($_POST["name"]) && isset($_POST["pdfName"])) {
-        $output .= $_POST["name"] .= $_POST["pdfName"];
+    if (isset($_POST["professorSubmit"]) && isset($_POST["name"]) && isset($_POST["code"])) {
+        $output .= $_POST["name"] .= $_POST["code"];
     }
     else if (isset($_POST["studentSubmit"]) && isset($_POST["name"]) && isset($_POST["code"])) {
         $output .= $_POST["name"] .= $_POST["code"];

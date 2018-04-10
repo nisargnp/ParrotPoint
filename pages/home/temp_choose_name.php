@@ -16,6 +16,6 @@
 </form>
 HTML;
 
-    echo generatePageWithPDF($body);
+    echo renderPage("Choose Name", $body);
 
 ?>
