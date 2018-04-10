@@ -8,13 +8,12 @@
 	class SlideMessageHandler implements MessageComponentInterface {
 		protected $clients;
 
-		private $one_room_for_now;
-		private $room_list;
+		private $room_list, $user_list;
 
 		public function __construct() {
 			$this->clients = new \SplObjectStorage;
-			$this->one_room_for_now = new LectureRoom;
 			$this->room_list = array();
+			$this->user_list = array();
 		}
 
 		public function onOpen(ConnectionInterface $conn) {
@@ -22,21 +21,6 @@
 			$this->clients->attach($conn);
 
 			echo "New connection! ({$conn->resourceId})\n";
-
-			// add to master room for now
-			// future needs to determine which room to put them in somehow
-			$this->one_room_for_now->addUser($conn->resourceId, $conn);
-
-			// send current page number for initial rendering
-			$conn->send($this->one_room_for_now->getPage());
-
-			// send chat welcome message
-			$conn->send("chat:Professor:Welcome to the chat!");
-
-			// send polling status
-			if ($this->one_room_for_now->currentlyPolling()) {
-				$conn->send("polling:active");
-			}
 
 		}
 
@@ -53,40 +37,58 @@
 
 			print_r($chunks);
 
-			if ($header == "chat") {
-				foreach ($this->one_room_for_now->getConnections() as $client) {
+			$code = $this->users_list[$from->resourceId];
+
+			if ($header == "join") {
+				$spl = explode(":", $payload, 2);
+				$c = $spl[0];
+				echo "joining room {$c}\n";
+				$this->room_list[$c]->addUser($from->resourceId, $from, $spl[1]);
+				$this->users_list[$from->resourceId] = $c;
+
+				// send current page number for initial rendering
+				$from->send($this->room_list[$c]->getPage());
+
+				// send chat welcome message
+				$from->send("chat:Professor:Welcome to the chat!");
+
+				// send polling status
+				if ($this->room_list[$c]->currentlyPolling()) {
+					$from->send("polling:active");
+				}
+
+			}
+			else if ($header == "chat") {
+				foreach ($this->room_list[$code]->getConnections() as $client) {
 					if ($from !== $client) {
 						// The sender is not the receiver, send to each client connected
-						$uname = $this->one_room_for_now->getName($from->resourceId);
+						$uname = $this->room_list[$code]->getName($from->resourceId);
 
 						$client->send("chat:" . $uname . ":" . $payload);
 					}
 				}
 			}
-			else if ($header == "set-name") {
-				$this->one_room_for_now->setName($from->resourceId, $payload);
-			}
 			else if ($header == "auth-professor") {
-				$this->one_room_for_now->setProfessor($from->resourceId);
+				$this->room_list[$code]->setProfessor($payload, $from->resourceId);
 			}
 
 			// from professor client -> sends this msg to start polling
-			else if ($header == "polling-start" /*&& $this->one_room_for_now->isProfessor($from->resourceId)*/) {
+			else if ($header == "polling-start" && $this->room_list[$code]->isProfessor($from->resourceId)) {
 				echo "polling-start\n";
 				$numAnswers = 4;
-				$this->one_room_for_now->startPolling();
-				foreach ($this->one_room_for_now->getConnections() as $conn) {
+				$this->room_list[$code]->startPolling();
+				foreach ($this->room_list[$code]->getConnections() as $conn) {
 					$conn->send("polling:start:$numAnswers");
 				}
 			}
 
 			// from professor client -> sends this msg to stop polling
-			else if ($header == "polling-stop" /*&& $this->one_room_for_now->isProfessor($from->resourceId)*/) {
+			else if ($header == "polling-stop" && $this->room_list[$code]->isProfessor($from->resourceId)) {
 				echo "polling-stop\n";
-				$this->one_room_for_now->stopPolling();
-				foreach ($this->one_room_for_now->getConnections() as $conn) {
+				$this->room_list[$code]->stopPolling();
+				foreach ($this->room_list[$code]->getConnections() as $conn) {
 					$conn->send("polling:stop");
-					$polling_results = $this->one_room_for_now->getResults();
+					$polling_results = $this->room_list[$code]->getResults();
 
 					// todo: remove hardcode
 					//$polling_results = Array(1,12,7,3);
@@ -99,7 +101,7 @@
 			else if ($header == "polling-reply") {
 				echo "polling-reply\n";
 				$data = json_decode($payload);
-				$this->one_room_for_now->updateResults($data);
+				$this->room_list[$code]->updateResults($data);
 			}
 
 			else if ($header == "make-room") {
@@ -108,18 +110,20 @@
 				echo "new room with code {$code}\n";
 				$this->room_list[$code] = new LectureRoom;
 				$this->room_list[$code]->setSessionId($spl[1]);
+
 			}
 
 			else {
 				if (is_numeric($msg)) {
-					if ($this->one_room_for_now->isProfessor($from->resourceId)) {
+					if ($this->room_list[$code]->isProfessor($from->resourceId)) {
 							
-						$this->one_room_for_now->setPage(intval($msg));
+						$this->room_list[$code]->setPage(intval($msg));
 
-						foreach ($this->one_room_for_now->getConnections() as $client) {
+						$cp = $this->room_list[$code]->getPage();
+						foreach ($this->room_list[$code]->getConnections() as $client) {
 							if ($from !== $client) {
 								// The sender is not the receiver, send to each client connected
-								$client->send($this->one_room_for_now->getPage());
+								$client->send($cp);
 							}
 						}
 					}
@@ -131,7 +135,12 @@
 			// The connection is closed, remove it, as we can no longer send it messages
 			$this->clients->detach($conn);
 
-			$this->one_room_for_now->removeUser($conn->resourceId);			
+			if (array_key_exists($conn->resourceId, $this->users_list)) {
+				$code = $this->users_list[$conn->resourceId];
+				$this->room_list[$code]->removeUser($conn->resourceId);	
+
+				// CLEAN UP OTHER STUFF HERE !!!
+			}
 
 			echo "Connection {$conn->resourceId} has disconnected\n";
 		}

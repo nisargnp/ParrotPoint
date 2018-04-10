@@ -6,7 +6,7 @@
     session_start();
 
     // Code carried over from code entry with a post or something
-    $code = "ABCD";
+    $code = "d1703";
 
     $body = <<<HTML
 <form method="post" action="/389NGroupProject/pages/lecture/lecture-view.php">

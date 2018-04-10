@@ -9,27 +9,50 @@
     // header("Pragma: no-cache"); // HTTP 1.0.
     // header("Expires: 0"); // Proxies.
 
+    session_start();
+
+    $sid = session_id();
+
     $output = "";
+    $code = "";
+    $name = "";
+    $prof = "false";
+    $start_polling = <<<HTML
+        <li><a id='polling' onclick='startPolling()'>Start Polling</a></li>
+HTML;
+
+    $polling_option = ""; // empty for student, start/stop_polling for prof
 
     if (isset($_POST["professorSubmit"]) && isset($_POST["name"]) && isset($_POST["code"])) {
-        $output .= $_POST["name"] .= $_POST["code"];
+        $output .= $_POST["name"] . $_POST["code"];
+        $code = $_POST["code"];
+        $name = $_POST["name"];
+        $polling_option = "$start_polling";
+        $prof = "true";
     }
     else if (isset($_POST["studentSubmit"]) && isset($_POST["name"]) && isset($_POST["code"])) {
-        $output .= $_POST["name"] .= $_POST["code"];
+        $output .= $_POST["name"] . $_POST["code"];
+        $code = $_POST["code"];
+        $name = $_POST["name"];
     }
     else {
         $output .= "Bad Form Submit";
     }
 
-
-    $start_polling = <<<HTML
-        <li><a id='polling' onclick='startPolling()'>Start Polling</a></li>
-HTML;
-
-    $polling_option = "$start_polling"; // empty for student, start/stop_polling for prof
-
     $body = <<<HTML
 $output
+
+<!-- hacks -->
+<script>
+    var code = "$code";
+    var name = "$name";
+    var isProfessor = $prof;
+
+    function tryAuth() {
+        conn.send("auth-professor:$sid");
+    }
+</script>
+
 <div id="left-panel">
     <center>
         <canvas id="pdf_view"></canvas>

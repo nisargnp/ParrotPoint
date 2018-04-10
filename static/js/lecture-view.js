@@ -3,11 +3,12 @@
 
 /*
 TODO:
-- implement professor session check in the DB on the WSS
-- separate professor and student view for this page
-
-- LATER: make a url to query a pdf via a name
-
+- protect wss messages from bad people
+- in professor make-room, add PDF name handler
+    - then in lectureview wss will send back the pdf name after join
+        - handle no render on bad post
+    - but first, need to make a url to query a pdf via a name
+- some code could be cleaned up
 */
 
 var defaultPDFUrl = "/389NGroupProject/static/pdf/introHTML.pdf";
@@ -23,8 +24,6 @@ var numPages = 0;
 var scale = 1.5;
 var canvas = document.getElementById("pdf_view");
 var context = canvas.getContext('2d');
-
-var isProfessor = false;
 
 var savedChat = "";
 
@@ -163,26 +162,6 @@ var sendMessage = function() {
     }
 }
 
-// call this right when page loads to set user name given form other page
-function setChatName(name) {
-    // assuming input has been sanitized by somewhere else
-    conn.send("set-name:" + name);
-}
-
-// professor stuff
-
-function setProfessor() {
-    // after login prof starts a php session
-    // when prof starts a lecture send session_id() to wss to be stored
-        // map session id to random code generated
-    // here, we will send session_id() + lecture code to be validated
-    // prevents students from sending a similar message and becoming professor
-    
-    // but we need other pages to be made b4 this. so for now lets just send this
-    conn.send("auth-professor:1");
-    isProfessor = true;
-}
-
 $(function() {
     // Initially download PDF
     PDFJS.getDocument(defaultPDFUrl).then(function(pdfDoc_) {
@@ -194,6 +173,13 @@ $(function() {
         conn = new WebSocket('ws://localhost:3001');
         conn.onopen = function(e) {
             console.log("Connection established!");
+
+            // join the room on wss
+            conn.send("join:" + code + ":" + name);
+
+            if (isProfessor) {
+                tryAuth();
+            }
         };
 
         conn.onmessage = function(e) {

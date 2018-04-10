@@ -35,9 +35,11 @@
 
             // professor
 
-            public function setProfessor($prof_id) {
-                echo "setting professor {$prof_id}\n";
-                $this->professor = $prof_id;
+            public function setProfessor($sid, $prof_id) {
+                if ($this->professor == NULL && $this->session_id == $sid) {
+                    echo "setting professor {$prof_id}\n";
+                    $this->professor = $prof_id;
+                }
             }
 
             public function isProfessor($id) {
@@ -52,9 +54,9 @@
 
             // users
 
-            public function addUser($id, $conn) {
+            public function addUser($id, $conn, $name) {
                 echo "adding user {$id}\n";
-                $this->users[$id] = $id;
+                $this->users[$id] = $name;
                 $this->connections[$id] = $conn;
             }
 
@@ -74,17 +76,6 @@
 
             public function getName($id) {
                 return $this->users[$id];
-            }
-
-            public function setName($id, $name) {
-                echo "setting name user {$id} to {$name}\n";
-                if ($this->users[$id] == $id) {
-                    $this->users[$id] = $name;
-                }
-                else {
-                    $bname = $this->users[$id];
-                    echo "bad: {$bname}\n";
-                }
             }
 
             // lecture pages
