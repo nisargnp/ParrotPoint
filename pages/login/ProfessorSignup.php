@@ -13,7 +13,7 @@
 		// validate the fields 
 		if (validateFields($name, $username)) {
 			// insert the user into the table
-			$results = dbQuery("insert into users values ('$username', '$name', '$password')");
+			$results = dbQuery("insert into professors values ('$username', '$name', '$password')");
 
 			// TODO: redirect on success
 			// header("Location: ");

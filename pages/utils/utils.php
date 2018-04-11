@@ -126,7 +126,7 @@ HTML;
     function userExistsInDB($user) {
         global $db_connection;
         $success = false;
-        $results = $db_connection->query("select * from users where username='$user'");
+        $results = $db_connection->query("select * from professors where username='$user'");
 
         if ($results->num_rows !== 0) {
             $success = true;

@@ -42,7 +42,7 @@ BODY;
 	function validateFields($username, $password) {
 		global $db_connection;
 		$isValid = true;
-        $results = $db_connection->query("select * from users where username='$username'");
+        $results = $db_connection->query("select * from professors where username='$username'");
 
         if ($results->num_rows === 0) {
             $isValid = false;
