@@ -146,3 +146,7 @@ body, html {
 #popup-close:focus {
     cursor: pointer;
 }
+
+#polling {
+	cursor: pointer;
+}

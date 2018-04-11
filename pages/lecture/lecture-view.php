@@ -71,9 +71,9 @@ $output
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
             <!-- for the code have an inner expandable with code put in via PHP variable -->
-            <li><a onclick="console.log('code'); return false;">Lecture Code</a></li>
+            <li><a style="pointer-events: none; cursor: default;">Code: <b>$code</b></a></li>
             <!-- wtf do i do here -->
-            <li><a onclick="#">Download</a></li>
+            <li><a href="/389NGroupProject/static/pdf/introHTML.pdf">Download</a></li>
             <!-- nothing for student -->
             $polling_option
             <li role="separator" class="divider"></li>
