@@ -13,6 +13,7 @@
 
     $sid = session_id();
 
+    $valid = true;
     $output = "";
     $code = "";
     $name = "";
@@ -23,20 +24,19 @@ HTML;
 
     $polling_option = ""; // empty for student, start/stop_polling for prof
 
-    if (isset($_POST["professorSubmit"]) && isset($_POST["name"]) && isset($_POST["code"])) {
+    if (isset($_POST["name"]) && isset($_POST["code"])) {
         $output .= $_POST["name"] . $_POST["code"];
         $code = $_POST["code"];
         $name = $_POST["name"];
-        $polling_option = "$start_polling";
-        $prof = "true";
-    }
-    else if (isset($_POST["studentSubmit"]) && isset($_POST["name"]) && isset($_POST["code"])) {
-        $output .= $_POST["name"] . $_POST["code"];
-        $code = $_POST["code"];
-        $name = $_POST["name"];
+
+        if (isset($_POST["professorSubmit"])) {
+            $polling_option = "$start_polling";
+            $prof = "true";
+        }
     }
     else {
         $output .= "Bad Form Submit";
+        $valid = false;
     }
 
     $body = <<<HTML
@@ -102,6 +102,11 @@ $output
 
 HTML;
 
-    echo generatePageWithPDF($body);
+    if ($valid) {
+        echo generatePageWithPDF($body);
+    }
+    else {
+        echo "bad form submit. replace this with redirect later. go thru name enter page for student, or professor dashboard for professor";
+    }
 
 ?>
