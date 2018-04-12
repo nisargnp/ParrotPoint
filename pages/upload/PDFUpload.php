@@ -1,3 +1,4 @@
+<!-- Needs: login page to set session var for the professor's username -->
 <?php
 	require_once("../utils/utils.php");
 	session_start();
@@ -37,21 +38,19 @@ BODY;
 
 				// get necessary fields
 				$filename = $_FILES['uploaded_file']['name'];
-				$uploader = ""; // TODO: fill this with the proper value (session -> professor will be logged in)
+				$uploader = ""; // TODO: fill this with the proper value (session[professor] will be logged in)
 				$pdf = $db_connection->real_escape_string(file_get_contents($serverFileName));
+				$code = substr(md5(microtime()),rand(0,26),5);
 
 				// insert the pdf into the database
 				if (strlen($filename) > 0 && strlen($pdf) > 0) { // TESTING: could modify/remove this check
-					$results = dbQuery("insert into pdfs (filename, uploader, pdf) values ('$filename', '$uploader', '$pdf')");
+					$results = dbQuery("insert into pdfs (filename, uploader, pdf, code) values ('$filename', '$uploader', '$pdf', '$code')");
 				}
 
 				// delete the file from temporary storage
 				// POSSIBLE: move this before the query to delete the file in case the query fails
 				unlink($serverFileName);
 			}
-
-		
-
 
 		}
 
