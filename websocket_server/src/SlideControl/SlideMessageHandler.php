@@ -66,7 +66,7 @@
 				echo "new room with code {$c}\n";
 				$this->room_list[$c] = new LectureRoom;
 				$this->room_list[$c]->setSessionId($spl[1]);
-
+				$from->send("created-room:true");
 			}
 			else if (array_key_exists($from->resourceId, $this->users_list)) {
 				$code = $this->users_list[$from->resourceId];
