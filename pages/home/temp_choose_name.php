@@ -6,12 +6,12 @@
     session_start();
 
     // Code carried over from code entry with a post or something
-    $code = "ce57d";
+    $code = "4cfe1";
 
     $body = <<<HTML
 <form method="post" action="/389NGroupProject/pages/lecture/lecture-view.php">
     <input type="text" name="name" placeholder="Enter your Name" required /> <br />
-    <input type="hidden" name="code" value="$code" />
+    <input type="text" name="code" value="" placeholder="code" />
     <input type="submit" name="studentSubmit" /> <br />
 </form>
 HTML;

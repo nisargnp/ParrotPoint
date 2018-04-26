@@ -8,12 +8,12 @@
 	class SlideMessageHandler implements MessageComponentInterface {
 		protected $clients;
 
-		private $room_list, $user_list;
+		private $room_list, $users_list;
 
 		public function __construct() {
 			$this->clients = new \SplObjectStorage;
 			$this->room_list = array();
-			$this->user_list = array();
+			$this->users_list = array();
 		}
 
 		public function onOpen(ConnectionInterface $conn) {
