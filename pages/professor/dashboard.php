@@ -5,8 +5,12 @@
     // Temp placeholder page so i can test lecture view stuff
     session_start();
 
+    // TODO: update these w/ form data
+    $professorName = "Nelson";
+    $pdfName = "sample1.pdf";
+    
     if (isset($_POST["name"]) && isset($_POST["code"])) {
-        $_SESSION['studentUsername'] = $_POST["name"];
+        $_SESSION['studentUsername'] = $_POST["name"]; // shouldn't this be professor_name?
         $_SESSION['code'] = $_POST["code"];
         $_SESSION['isProfessor'] = true;
         header("Location: /389NGroupProject/pages/lecture/lecture-view.php");
@@ -42,7 +46,7 @@
     function makeRoom() {
         // generate random code - for now...
         // add pdf name here later
-        conn.send("make-room:$code:$sid");
+        conn.send("make-room:$code:$sid:$professorName:$pdfName");
 
         return false;
     }

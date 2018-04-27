@@ -50,6 +50,11 @@
 						// send current page number for initial rendering
 						$from->send($this->room_list[$c]->getPage());
 
+						$professorName = $this->room_list[$c]->getProfessorName();
+						$pdfName = $this->room_list[$c]->getPDFName();
+						echo "SENDING: " . "room-info:$professorName:$pdfName" . "\n";
+						$from->send("room-info:$professorName:$pdfName");
+
 						// send chat welcome message
 						$from->send("chat:Professor:Welcome to the chat!");
 
@@ -64,11 +69,15 @@
 				}
 			}
 			else if ($header == "make-room") {
-				$spl = explode(":", $payload, 2);
+				$spl = explode(":", $payload, 4);
 				$c = $spl[0];
 				echo "new room with code {$c}\n";
 				$this->room_list[$c] = new LectureRoom;
 				$this->room_list[$c]->setSessionId($spl[1]);
+
+				$this->room_list[$c]->setProfessorName($spl[2]);
+				$this->room_list[$c]->setPDFName($spl[3]);
+
 				$from->send("created-room:true");
 			}
 			else if ($header == "validate-code") {

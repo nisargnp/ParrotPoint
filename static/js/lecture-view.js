@@ -1,6 +1,8 @@
 // RUN `php websocket_server/bin/server.php` in the background 
 // before opening these test files in XAMPP
 
+// TODO: here's the pdf get enpoint: 
+//      "../../pages/upload/PDFDownload.php?uploader=<professor_name>&filename=<pdf_name>"
 var defaultPDFUrl = "/389NGroupProject/static/pdf/introHTML.pdf";
 
 var pdfDoc = null;
@@ -16,6 +18,9 @@ var canvas = document.getElementById("pdf_view");
 var context = canvas.getContext('2d');
 
 var savedChat = "";
+
+var professorName = "";
+var pdfName = "";
 
 // PDF Functions
 
@@ -55,6 +60,7 @@ function makePageManager(curr) {
     return [inc, dec, gotoLocal, gotoMaster, setMaster];
 }
 
+// TODO: need to reorder this so that PDF is loaded after we get pdf name from ws
 function generatePDF(pdfPage) {
     if (pdfDoc != null) {
         pageRendering = true;
@@ -278,6 +284,15 @@ $(function() {
 
             }
 
+            else if (header == "room-info") {
+                console.log("room-info");
+                [_, professorName, pdfName] = e.data.split(":", 3);
+                defaultPDFUrl = "../../pages/upload/PDFDownload.php?uploader=" + professorName + "&filename=" + pdfName;
+                console.log("professorName: " + professorName);
+                console.log("pdfName: " + pdfName);
+                console.log("defaultPDFUrl: " + defaultPDFUrl);
+            }
+
             else {
                 if (!isNaN(e.data)) {
                     let pageNum = parseInt(e.data);
@@ -308,6 +323,15 @@ $(function() {
     });
 
 });
+
+var downloadPDF = function() {
+    console.log("downloading pdf");
+    console.log(defaultPDFUrl + "&download");
+    $.ajax({
+        url: defaultPDFUrl + "&download",
+        success: download.bind(true, "application/pdf", pdfName)
+    });
+}
 
 var startPolling = function() {
     console.log("start polling");

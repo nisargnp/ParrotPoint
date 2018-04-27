@@ -64,6 +64,7 @@ HTML;
 
             <script src="/389NGroupProject/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
             <script src="/389NGroupProject/static/dist/bootstrap/js/bootstrap.min.js"></script>
+            <script src="/389NGroupProject/static/dist/download.js"></script>
             <script type='text/javascript' src="/389NGroupProject/static/js/lecture-view.js"></script>
 
         </body>

@@ -14,6 +14,9 @@
             private $polling;
             private $latestPollingResults;
 
+            private $professorName;
+            private $pdfName;
+
             public function __construct() {
                 echo "making new room\n";
                 $this->professor = NULL;
@@ -112,6 +115,22 @@
 
             public function getResults() {
                 return $this->latestPollingResults;
+            }
+
+            public function setProfessorName($professorName) {
+                $this->professorName = $professorName;
+            }
+
+            public function getProfessorName() {
+                return $this->professorName;
+            }
+
+            public function setPDFName($pdfName) {
+                $this->pdfName = $pdfName;
+            }
+
+            public function getPDFName() {
+                return $this->pdfName;
             }
 
         }
