@@ -2,19 +2,34 @@
     
     require("../utils/utils.php");
 
-    // Temp placeholder page so i can test lecture view stuff
     session_start();
 
-    // TODO: update these w/ form data
-    $professorName = "nelsonp";
-    $pdfName = "onion_routing.pdf";
+    $professorName = isset($_SESSION['username']) ? $_SESSION['username'] : "";
     
-    if (isset($_POST["name"]) && isset($_POST["code"])) {
-        $_SESSION['studentUsername'] = $_POST["name"]; // shouldn't this be professor_name?
+    if (isset($_SESSION['username']) && isset($_POST["code"])) {
+        $_SESSION['studentUsername'] = $professorName; // shouldn't this be professor_name?
         $_SESSION['code'] = $_POST["code"];
         $_SESSION['isProfessor'] = true;
         header("Location: /389NGroupProject/pages/lecture/lecture-view.php");
     }
+
+    // query DB to get available PDFs for professor
+    $db_connection = dbConnect();
+    $query = "SELECT filename FROM pdfs WHERE uploader=\"$professorName\"";
+    $result = $db_connection->query($query);
+
+    $pdfNames = array();
+    while($row = $result->fetch_array(MYSQLI_ASSOC)) { 
+        $pdfNames[] = $row["filename"];
+    }
+    natcasesort($pdfNames);
+    $pdfNames = array_unique($pdfNames);
+
+    $pdf_options = "";
+    foreach ($pdfNames as $pdf) {
+        $pdf_options .= "<option value='$pdf'>$pdf</option>";
+    }
+
 
     $sid = session_id();
 
@@ -22,11 +37,15 @@
 
     $body = <<<HTML
 <form id="form" method="post" action="{$_SERVER['PHP_SELF']}" >
-    <input type="text" name="name" value="Professor" required /> <br />
-    <input type="text" name="pdfName" placeholder="Name of PDF" required /> <br />
+    <select id="pdf-selector" name="pdf-selector">
+        $pdf_options
+    </select>
     <input type="hidden" name="code" value="$code" />
     <input type="button" onclick="makeRoom();" value="Submit" /> <br />
 </form>
+<br />
+<br />
+<a href="/389NGroupProject/pages/upload/PDFUpload.php"><button>PDF Upload</button></a>
 
 <script>
     var conn = new WebSocket('ws://localhost:3001');
@@ -44,15 +63,17 @@
     
     // do this before posting to the lecture view page
     function makeRoom() {
-        // generate random code - for now...
-        // add pdf name here later
-        conn.send("make-room:$code:$sid:$professorName:$pdfName");
-
+        let pdfName = document.getElementById("pdf-selector").value;
+        conn.send("make-room:$code:$sid:$professorName:" + pdfName);
         return false;
     }
 </script>
 HTML;
 
-    echo renderPage("Dashboard", $body);
+    if (isset($_SESSION['username'])) {
+        echo renderPage("Dashboard", $body);
+    } else {
+        header("Location: /389NGroupProject/pages/login/ProfessorLogin.php");
+    }
 
 ?>

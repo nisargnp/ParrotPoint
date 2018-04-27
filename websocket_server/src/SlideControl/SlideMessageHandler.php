@@ -163,6 +163,11 @@
 				$code = $this->users_list[$conn->resourceId];
 				$this->room_list[$code]->removeUser($conn->resourceId);	
 
+				echo "{$this->room_list[$code]->getTotalUsers()} users left\n";
+				if ($this->room_list[$code]->getTotalUsers() == 0) {
+					unset($this->room_list[$code]);
+				}
+
 				unset($this->users_list[$conn->resourceId]);
 			}
 

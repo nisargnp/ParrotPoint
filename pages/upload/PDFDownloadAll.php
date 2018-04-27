@@ -51,6 +51,12 @@
             <input type="submit" name="choose_professor" value="Choose Professor">
         </form>
         <br>
+        <br>
 HTML;
 
-    echo renderPage("Download PDFs", $form . $pdf_list);
+    $backButton = <<<HTML
+    <br><br>
+    <a href="/389NGroupProject/pages/home/FrontPage.php"><button>Back to Home</button></a>
+HTML;
+
+    echo renderPage("Download PDFs", $form . $pdf_list . $backButton);

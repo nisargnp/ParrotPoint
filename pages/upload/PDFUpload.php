@@ -6,7 +6,7 @@
 	$body = "";
 
 	// process upload (download pdf into storage -> upload to db -> delete from storage)
-	if (isset($_POST["upload"])) {
+	if (isset($_POST["upload"]) && isset($_SESSION['username'])) {
 
 		// changing some stuff up
 		// don't think we need to move the file before adding it to db
@@ -27,7 +27,7 @@
 
 			// get necessary fields
 			$filename = $db_connection->escape_string($_FILES['uploaded_file']['name']);
-			$uploader = ""; // TODO: fill this with the proper value (session[professor] will be logged in)
+			$uploader = $_SESSION['username'];
 			$pdf = $db_connection->escape_string(file_get_contents($tmpFileName));
 			$code = substr(md5(microtime()),rand(0,26),5);
 
@@ -67,9 +67,14 @@
 		<input type="submit" value="Upload" name="upload">
 	</form>
 	<br><br>
+	<a href="/389NGroupProject/pages/professor/dashboard.php"><button>Back to Dashboard</button></a>
 HTML;
 	$body = $form . $body;
 
-	echo renderPage("PDF Upload", $body);
+	if (isset($_SESSION['username'])) {
+		echo renderPage("PDF Upload", $body);
+	} else {
+		header("Location: /389NGroupProject/pages/login/ProfessorLogin.php");
+	}
 ?>
 

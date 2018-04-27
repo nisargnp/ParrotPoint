@@ -71,6 +71,10 @@
                 }
             }
 
+            public function getTotalUsers() {
+                return sizeof($this->users);
+            }
+
             public function getConnections() {
                 return array_values($this->connections);
             }

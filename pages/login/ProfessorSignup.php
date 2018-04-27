@@ -15,8 +15,8 @@
 			// insert the user into the table
 			$results = dbQuery("insert into professors values ('$username', '$name', '$password')");
 
-			// TODO: redirect on success
-			header("Location: ProfessorLogin.php");
+			$_SESSION['username'] = $username;
+			header("Location: /389NGroupProject/pages/professor/dashboard.php");
 		}
 	}
 

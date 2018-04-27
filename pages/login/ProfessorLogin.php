@@ -16,7 +16,8 @@
 		}
 		else {
 			// TODO: redirect on success
-			// header("Location: ");
+			$_SESSION['username'] = $_POST['username'];
+			header("Location: /389NGroupProject/pages/professor/dashboard.php");
 		}
 	}
 	// process sign up
