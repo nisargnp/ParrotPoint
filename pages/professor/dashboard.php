@@ -29,6 +29,7 @@
     foreach ($pdfNames as $pdf) {
         $pdf_options .= "<option value='$pdf'>$pdf</option>";
     }
+    $pdf_options .= "<option value ='Default'>Default</option>";
 
 
     $sid = session_id();
@@ -36,17 +37,37 @@
     $code = $rand = substr(md5(microtime()),rand(0,26),5);
 
     $body = <<<HTML
+    <div class ="nav-top">
+    <div class = "nameBox">
+                 Welcome back $professorName
+    </div>
+    <div class = "settingInfo">
+        <div class = "btn-group">
+        <button type="button" class="btnRed btn-danger btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    Settings 
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu">
+                 <li><a href="logout.php?">Log Out</a></li>
+			  </ul>
+    </div>
+    </div>
+    </div>
+    <div class = " container">
+    <div class = "dashboard-top">
+    <h2>Choose a PDF</h2>
+    </div>
 <form id="form" method="post" action="{$_SERVER['PHP_SELF']}" >
-    <select id="pdf-selector" name="pdf-selector">
+    <select id="pdf-selector" class = "pdf-selector"  name="pdf-selector">
         $pdf_options
     </select>
     <input type="hidden" name="code" value="$code" />
-    <input type="button" onclick="makeRoom();" value="Submit" /> <br />
+    <input type="button" onclick="makeRoom();" value="Create lecture" /> <br />
 </form>
 <br />
 <br />
 <a href="/389NGroupProject/pages/upload/PDFUpload.php"><button>PDF Upload</button></a>
-
+</div>
 <script>
     var conn = new WebSocket('ws://localhost:3001');
 
@@ -60,6 +81,7 @@
             document.getElementById("form").submit();
         }
     }
+    
     
     // do this before posting to the lecture view page
     function makeRoom() {
