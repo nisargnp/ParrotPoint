@@ -58,6 +58,9 @@
 							$from->send("polling:active");
 						}
 					}
+					else {
+						$from->send("bad-room:false");
+					}
 				}
 			}
 			else if ($header == "make-room") {
@@ -67,6 +70,13 @@
 				$this->room_list[$c] = new LectureRoom;
 				$this->room_list[$c]->setSessionId($spl[1]);
 				$from->send("created-room:true");
+			}
+			else if ($header == "validate-code") {
+				if (array_key_exists($payload, $this->room_list)) {
+					$from->send("validate-response:true");
+				} else {
+					$from->send("validate-response:false");
+				}
 			}
 			else if (array_key_exists($from->resourceId, $this->users_list)) {
 				$code = $this->users_list[$from->resourceId];

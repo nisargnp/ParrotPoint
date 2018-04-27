@@ -5,16 +5,22 @@
     // Temp placeholder page so i can test lecture view stuff
     session_start();
 
+    if (isset($_POST["name"]) && isset($_POST["code"])) {
+        $_SESSION['studentUsername'] = $_POST["name"];
+        $_SESSION['code'] = $_POST["code"];
+        $_SESSION['isProfessor'] = true;
+        header("Location: /389NGroupProject/pages/lecture/lecture-view.php");
+    }
+
     $sid = session_id();
 
     $code = $rand = substr(md5(microtime()),rand(0,26),5);
 
     $body = <<<HTML
-<form id="form" method="post" action="/389NGroupProject/pages/lecture/lecture-view.php" >
+<form id="form" method="post" action="{$_SERVER['PHP_SELF']}" >
     <input type="text" name="name" value="Professor" required /> <br />
     <input type="text" name="pdfName" placeholder="Name of PDF" required /> <br />
     <input type="hidden" name="code" value="$code" />
-    <input type="hidden" name="professorSubmit" value="" />
     <input type="button" onclick="makeRoom();" value="Submit" /> <br />
 </form>
 
@@ -37,6 +43,8 @@
         // generate random code - for now...
         // add pdf name here later
         conn.send("make-room:$code:$sid");
+
+        return false;
     }
 </script>
 HTML;

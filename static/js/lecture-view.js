@@ -1,16 +1,6 @@
 // RUN `php websocket_server/bin/server.php` in the background 
 // before opening these test files in XAMPP
 
-/*
-TODO:
-- protect wss messages from bad people
-- in professor make-room, add PDF name handler
-    - then in lectureview wss will send back the pdf name after join
-        - handle no render on bad post
-    - but first, need to make a url to query a pdf via a name
-- some code could be cleaned up
-*/
-
 var defaultPDFUrl = "/389NGroupProject/static/pdf/introHTML.pdf";
 
 var pdfDoc = null;
@@ -192,6 +182,10 @@ $(function() {
                 let [_, sender, message] = e.data.split(":", 3);
                 addToChatBox(message, sender);
             } 
+
+            else if (header == "bad-room") {
+                //document.getElementById("main").innerHTML = "<h1>Bad code given</h1>";
+            }
 
             // polling
             else if (header == "polling") {

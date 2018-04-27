@@ -14,8 +14,7 @@
     $sid = session_id();
 
     $valid = true;
-    $output = "";
-    $code = "";
+    $code = "default-code";
     $name = "";
     $prof = "false";
     $start_polling = <<<HTML
@@ -24,23 +23,20 @@ HTML;
 
     $polling_option = ""; // empty for student, start/stop_polling for prof
 
-    if (isset($_POST["name"]) && isset($_POST["code"])) {
-        $output .= $_POST["name"] . $_POST["code"];
-        $code = $_POST["code"];
-        $name = $_POST["name"];
+    if (isset($_SESSION['studentUsername']) && isset($_SESSION['code'])) {
+        $code = $_SESSION['code'];
+        $name = $_SESSION['studentUsername'];
 
-        if (isset($_POST["professorSubmit"])) {
+        if (isset($_SESSION['isProfessor'])) {
             $polling_option = "$start_polling";
             $prof = "true";
         }
     }
     else {
-        $output .= "Bad Form Submit";
         $valid = false;
     }
 
     $body = <<<HTML
-$output
 
 <!-- hacks -->
 <script>
