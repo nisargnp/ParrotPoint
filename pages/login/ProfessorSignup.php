@@ -16,7 +16,7 @@
 			$results = dbQuery("insert into professors values ('$username', '$name', '$password')");
 
 			// TODO: redirect on success
-			// header("Location: ");
+			header("Location: ProfessorLogin.php");
 		}
 	}
 
