@@ -19,6 +19,10 @@
 			// header("Location: ");
 		}
 	}
+	// process sign up
+	if (isset($_POST["signup"])) {
+		header("Location: ProfessorSignup.php");
+	}
 
 	$body = <<<BODY
 		<h1>Professor Sign In</h1>
@@ -27,6 +31,7 @@
 			Password: <input type="password" name="password"><br><br>
 
 			<input type="submit" value="Log In" name="login">
+			<input type="submit" value="Sign Up" name="signup">
 		</form><br>
 		
 		<strong>$bottom_text</strong>
