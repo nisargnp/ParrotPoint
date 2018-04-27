@@ -3,7 +3,7 @@
 
 // TODO: here's the pdf get enpoint: 
 //      "../../pages/upload/PDFDownload.php?uploader=<professor_name>&filename=<pdf_name>"
-var defaultPDFUrl = "/389NGroupProject/static/pdf/introHTML.pdf";
+var defaultPDFUrl = "";
 
 var pdfDoc = null;
 var conn = null;
@@ -60,7 +60,6 @@ function makePageManager(curr) {
     return [inc, dec, gotoLocal, gotoMaster, setMaster];
 }
 
-// TODO: need to reorder this so that PDF is loaded after we get pdf name from ws
 function generatePDF(pdfPage) {
     if (pdfDoc != null) {
         pageRendering = true;
@@ -157,172 +156,6 @@ var sendMessage = function() {
         return false;
     }
 }
-
-$(function() {
-    // Initially download PDF
-    PDFJS.getDocument(defaultPDFUrl).then(function(pdfDoc_) {
-        pdfDoc = pdfDoc_;
-
-        numPages = pdfDoc.pdfInfo.numPages;
-
-        // Setup Web Socket
-        conn = new WebSocket('ws://localhost:3001');
-        conn.onopen = function(e) {
-            console.log("Connection established!");
-
-            // join the room on wss
-            conn.send("join:" + code + ":" + name);
-
-            if (isProfessor) {
-                tryAuth();
-            }
-        };
-
-        conn.onmessage = function(e) {
-
-            console.log(e.data);
-
-            let [header] = e.data.split(":", 1);
-
-            if (header == "chat") {
-                let [_, sender, message] = e.data.split(":", 3);
-                addToChatBox(message, sender);
-            } 
-
-            else if (header == "bad-room") {
-                //document.getElementById("main").innerHTML = "<h1>Bad code given</h1>";
-            }
-
-            // polling
-            else if (header == "polling") {
-
-                let [_, action, info] = e.data.split(":", 3);
-                console.log(e.data.split(":", 3));
-
-                // polling start
-                if (action == "start") {
-                    
-                    // save and disable chat
-                    savedChat = document.getElementById("chat-box").innerHTML;
-                    document.getElementById("chat-text-box").disabled = true;
-                    document.getElementById("chat-send-btn").disabled = false;
-
-                    // update send button
-                    document.getElementById("chat-send-btn").setAttribute("onclick", "sendPoll(); return false;");
-
-                    // replace chat w/ poll
-                    numAnswers = parseInt(info);
-
-                    document.getElementById("chat-box").innerHTML = "<h3>Select Answer:</h3>";
-                    let form = document.createElement("form");
-                    for (let i = 0; i < numAnswers; i++) {
-
-                        let space3 = "&nbsp;&nbsp;&nbsp";
-
-                        let label = document.createElement("label");
-                        label.innerHTML = "<strong>" + space3 + i + "</strong>"; 
-
-                        let radio = document.createElement("input");
-                        radio.setAttribute("type", "radio");
-                        radio.setAttribute("name", "radio-poll");
-                        radio.setAttribute("value", "" + i);
-                        if (i == 0) {
-                            radio.setAttribute("checked", "checked");
-                        }
-
-                        form.appendChild(radio);
-                        form.appendChild(label);
-                        form.appendChild(document.createElement("br"));
-
-                    }
-
-                    document.getElementById("chat-box").appendChild(form);
-                    
-                }
-
-                // polling stop
-                else if (action == "stop") {
-
-                    console.log("restoring chat: " + savedChat);
-
-                    // restore chat
-                    if (savedChat.length > 0) {
-                        document.getElementById("chat-box").innerHTML = savedChat;
-                    }
-
-                    // restore send button
-                    document.getElementById("chat-send-btn").disabled = false;
-                    document.getElementById("chat-send-btn").setAttribute("onclick", "sendMessage(); return false;");
-
-                    // enable chat
-                    document.getElementById("chat-text-box").disabled = false;
-
-                }
-
-                // existing poll -> client cannot join
-                else if (action == "active") {
-                    savedChat = document.getElementById("chat-box").innerHTML;
-                    deactivateChatAfterPoll("Poll currently active.");
-                }
-
-                // polling results
-                else if (action == "results") {
-
-                    console.log("results:");
-                    console.log(info);
-
-                    let results = JSON.parse(info);
-
-                    let labels = [];
-                    for (let i = 0; i < results.length; i++) {
-                        labels[i] = "" + i;
-                    }
-
-                    createAndDisplayGraph(results, labels);
-
-                }
-
-            }
-
-            else if (header == "room-info") {
-                console.log("room-info");
-                [_, professorName, pdfName] = e.data.split(":", 3);
-                defaultPDFUrl = "../../pages/upload/PDFDownload.php?uploader=" + professorName + "&filename=" + pdfName;
-                console.log("professorName: " + professorName);
-                console.log("pdfName: " + pdfName);
-                console.log("defaultPDFUrl: " + defaultPDFUrl);
-            }
-
-            else {
-                if (!isNaN(e.data)) {
-                    let pageNum = parseInt(e.data);
-
-                    if (gotoMaster == null) {
-                        [incPage, decPage, gotoLocal, gotoMaster, setMasterPage] = makePageManager(pageNum);
-                        queueRenderPage(pageNum);
-                    }
-                    else {
-                        setMasterPage(pageNum);
-                    }
-                    console.log(e.data);
-                }
-            }
-        };
-    });
-
-    // correct scroll for chat box
-    updateScroll();
-
-    // set chat textbox / button handlers
-    document.getElementById("chat-text-box").addEventListener("keydown", function(e) {
-        if (e.keyCode == 13 && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-            return false;
-        }
-    });
-
-});
 
 var downloadPDF = function() {
     console.log("downloading pdf");
@@ -455,3 +288,179 @@ function createAndDisplayGraph(results, labels) {
     document.getElementById('graph-popup').style.display = "block";
 }
 
+
+
+$(function() {
+    // set up websocket
+    // Setup Web Socket
+    conn = new WebSocket('ws://localhost:3001');
+
+    conn.onmessage = function(e) {
+
+        console.log(e.data);
+
+        let [header] = e.data.split(":", 1);
+
+        if (header == "chat") {
+            let [_, sender, message] = e.data.split(":", 3);
+            addToChatBox(message, sender);
+        } 
+
+        else if (header == "bad-room") {
+            //document.getElementById("main").innerHTML = "<h1>Bad code given</h1>";
+        }
+
+        // polling
+        else if (header == "polling") {
+
+            let [_, action, info] = e.data.split(":", 3);
+            console.log(e.data.split(":", 3));
+
+            // polling start
+            if (action == "start") {
+                
+                // save and disable chat
+                savedChat = document.getElementById("chat-box").innerHTML;
+                document.getElementById("chat-text-box").disabled = true;
+                document.getElementById("chat-send-btn").disabled = false;
+
+                // update send button
+                document.getElementById("chat-send-btn").setAttribute("onclick", "sendPoll(); return false;");
+
+                // replace chat w/ poll
+                numAnswers = parseInt(info);
+
+                document.getElementById("chat-box").innerHTML = "<h3>Select Answer:</h3>";
+                let form = document.createElement("form");
+                for (let i = 0; i < numAnswers; i++) {
+
+                    let space3 = "&nbsp;&nbsp;&nbsp";
+
+                    let label = document.createElement("label");
+                    label.innerHTML = "<strong>" + space3 + i + "</strong>"; 
+
+                    let radio = document.createElement("input");
+                    radio.setAttribute("type", "radio");
+                    radio.setAttribute("name", "radio-poll");
+                    radio.setAttribute("value", "" + i);
+                    if (i == 0) {
+                        radio.setAttribute("checked", "checked");
+                    }
+
+                    form.appendChild(radio);
+                    form.appendChild(label);
+                    form.appendChild(document.createElement("br"));
+
+                }
+
+                document.getElementById("chat-box").appendChild(form);
+                
+            }
+
+            // polling stop
+            else if (action == "stop") {
+
+                console.log("restoring chat: " + savedChat);
+
+                // restore chat
+                if (savedChat.length > 0) {
+                    document.getElementById("chat-box").innerHTML = savedChat;
+                }
+
+                // restore send button
+                document.getElementById("chat-send-btn").disabled = false;
+                document.getElementById("chat-send-btn").setAttribute("onclick", "sendMessage(); return false;");
+
+                // enable chat
+                document.getElementById("chat-text-box").disabled = false;
+
+            }
+
+            // existing poll -> client cannot join
+            else if (action == "active") {
+                savedChat = document.getElementById("chat-box").innerHTML;
+                deactivateChatAfterPoll("Poll currently active.");
+            }
+
+            // polling results
+            else if (action == "results") {
+
+                console.log("results:");
+                console.log(info);
+
+                let results = JSON.parse(info);
+
+                let labels = [];
+                for (let i = 0; i < results.length; i++) {
+                    labels[i] = "" + i;
+                }
+
+                createAndDisplayGraph(results, labels);
+
+            }
+
+        }
+
+        else if (header == "room-info") {
+            console.log("room-info");
+            [_, professorName, pdfName] = e.data.split(":", 3);
+            defaultPDFUrl = "../../pages/upload/PDFDownload.php?uploader=" + professorName + "&filename=" + pdfName;
+            console.log("professorName: " + professorName);
+            console.log("pdfName: " + pdfName);
+            console.log("defaultPDFUrl: " + defaultPDFUrl);
+
+            // Initially download PDF
+            PDFJS.getDocument(defaultPDFUrl).then(function(pdfDoc_) {
+                pdfDoc = pdfDoc_;
+                numPages = pdfDoc.pdfInfo.numPages;
+                console.log("woof");
+                if (gotoMaster == null) {
+                    // if we finish DL before ws sends back master page, render page 1, wss will handle later
+                    queueRenderPage(1);
+                } else {
+                    // else we finished after, so render gotten master page
+                    gotoMaster();
+                }
+            });
+        }
+
+        else {
+            if (!isNaN(e.data)) {
+                let pageNum = parseInt(e.data);
+
+                if (gotoMaster == null) {
+                    [incPage, decPage, gotoLocal, gotoMaster, setMasterPage] = makePageManager(pageNum);
+                    queueRenderPage(pageNum);
+                }
+                else {
+                    setMasterPage(pageNum);
+                }
+                console.log(e.data);
+            }
+        }
+    };
+
+    conn.onopen = function(e) {
+        console.log("Connection established!");
+
+        // join the room on wss
+        conn.send("join:" + code + ":" + name);
+
+        if (isProfessor) {
+            tryAuth();
+        }
+    };
+
+    // correct scroll for chat box
+    updateScroll();
+
+    // set chat textbox / button handlers
+    document.getElementById("chat-text-box").addEventListener("keydown", function(e) {
+        if (e.keyCode == 13 && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+            return false;
+        }
+    });
+
+});

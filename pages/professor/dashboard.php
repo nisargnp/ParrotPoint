@@ -6,8 +6,8 @@
     session_start();
 
     // TODO: update these w/ form data
-    $professorName = "Nelson";
-    $pdfName = "sample1.pdf";
+    $professorName = "nelsonp";
+    $pdfName = "onion_routing.pdf";
     
     if (isset($_POST["name"]) && isset($_POST["code"])) {
         $_SESSION['studentUsername'] = $_POST["name"]; // shouldn't this be professor_name?

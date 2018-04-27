@@ -47,9 +47,6 @@
 						$this->room_list[$c]->addUser($from->resourceId, $from, $spl[1]);
 						$this->users_list[$from->resourceId] = $c;
 
-						// send current page number for initial rendering
-						$from->send($this->room_list[$c]->getPage());
-
 						$professorName = $this->room_list[$c]->getProfessorName();
 						$pdfName = $this->room_list[$c]->getPDFName();
 						echo "SENDING: " . "room-info:$professorName:$pdfName" . "\n";
@@ -62,6 +59,9 @@
 						if ($this->room_list[$c]->currentlyPolling()) {
 							$from->send("polling:active");
 						}
+
+						// send current page number for initial rendering
+						$from->send($this->room_list[$c]->getPage());
 					}
 					else {
 						$from->send("bad-room:false");
