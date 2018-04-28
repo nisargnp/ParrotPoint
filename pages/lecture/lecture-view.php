@@ -20,7 +20,18 @@
     $start_polling = <<<HTML
         <li><a id='polling' onclick='startPolling()'>Start Polling</a></li>
 HTML;
+    $slider = <<<HTML
+    <div id="switch-holder">
+        <label class="switch">
+            <input id="slider-input" type="checkbox" checked>
+            <span class="slider round"></span>
+        </label>
+        <br />
+        <label id="switch-label">Sync Slides</label>
+    </div>
+HTML;
 
+    $slider_feature = "";
     $polling_option = ""; // empty for student, start/stop_polling for prof
 
     if (isset($_SESSION['studentUsername']) && isset($_SESSION['code'])) {
@@ -30,6 +41,9 @@ HTML;
         if (isset($_SESSION['isProfessor'])) {
             $polling_option = "$start_polling";
             $prof = "true";
+        }
+        else {
+            $slider_feature = $slider;
         }
     }
     else {
@@ -50,13 +64,14 @@ HTML;
 </script>
 
 <div id="left-panel">
-    <center>
+    <center id="center-container">
         <canvas id="pdf_view"></canvas>
         <div style="width:80%; margin: 0px;">
             <label id="page-num">0</label>
             <button class="slide-control" onclick="decPage()"> < </button>
             <button class="slide-control" onclick="gotoMaster()"> o </button>
             <button class="slide-control" onclick="incPage()"> > </button>
+            $slider_feature
         </div>
     </center>
 
@@ -69,7 +84,7 @@ HTML;
             <!-- for the code have an inner expandable with code put in via PHP variable -->
             <li><a style="pointer-events: none; cursor: default;">Code: <b>$code</b></a></li>
             <!-- fixed -->
-            <li><a href="#" onclick='downloadPDF()'>Download</a></li>
+            <li><a id="download-button" href="#">Download</a></li>
             <!-- nothing for student -->
             $polling_option
             <li role="separator" class="divider"></li>
@@ -99,7 +114,7 @@ HTML;
 HTML;
 
     if ($valid) {
-        echo generatePageWithPDF($body);
+        echo generatePageWithPDF($body, "Lecture View");
     }
     else {
         echo "bad form submit. replace this with redirect later. go thru name enter page for student, or professor dashboard for professor";

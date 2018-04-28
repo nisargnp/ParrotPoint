@@ -2,6 +2,11 @@
 	require_once("../utils/utils.php");
 	session_start();
 
+	// if login session found, just redirect to dashboard
+	if (isset($_SESSION['username'])) {
+		header("Location: /389NGroupProject/pages/professor/dashboard.php");
+	}
+
 	$bottom_text = "";
 	$db_connection = dbConnect();
 

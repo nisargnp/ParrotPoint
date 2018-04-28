@@ -22,6 +22,8 @@ var savedChat = "";
 var professorName = "";
 var pdfName = "";
 
+var tracking = true;
+
 // PDF Functions
 
 function makePageManager(curr) {
@@ -55,7 +57,10 @@ function makePageManager(curr) {
     let setMaster = function(newMaster) {
         console.log("Got new master page");
         master = parseInt(newMaster);
-    }    
+        if (tracking) {
+            gotoMaster();
+        }
+    }   
 
     return [inc, dec, gotoLocal, gotoMaster, setMaster];
 }
@@ -157,14 +162,14 @@ var sendMessage = function() {
     }
 }
 
-var downloadPDF = function() {
-    console.log("downloading pdf");
-    console.log(defaultPDFUrl + "&download");
-    $.ajax({
-        url: defaultPDFUrl + "&download",
-        success: download.bind(true, "application/pdf", pdfName)
-    });
-}
+// var downloadPDF = function() {
+//     console.log("downloading pdf");
+//     console.log(defaultPDFUrl + "&download");
+//     $.ajax({
+//         url: defaultPDFUrl + "&download",
+//         success: download.bind(true, "application/pdf", pdfName)
+//     });
+// }
 
 var startPolling = function() {
     console.log("start polling");
@@ -295,6 +300,7 @@ $(function() {
     // Setup Web Socket
     conn = new WebSocket('ws://localhost:3001');
 
+
     conn.onmessage = function(e) {
 
         console.log(e.data);
@@ -404,10 +410,13 @@ $(function() {
         else if (header == "room-info") {
             console.log("room-info");
             [_, professorName, pdfName] = e.data.split(":", 3);
-            defaultPDFUrl = "../../pages/upload/PDFDownload.php?uploader=" + professorName + "&filename=" + pdfName;
+            defaultPDFUrl = "/389NGroupProject/pages/upload/PDFDownload.php?uploader=" + professorName + "&filename=" + pdfName;
             console.log("professorName: " + professorName);
             console.log("pdfName: " + pdfName);
             console.log("defaultPDFUrl: " + defaultPDFUrl);
+            
+            // set download handler
+            document.getElementById("download-button").href = defaultPDFUrl + "&download";
 
             // Initially download PDF
             PDFJS.getDocument(defaultPDFUrl).then(function(pdfDoc_) {
@@ -454,6 +463,7 @@ $(function() {
     // correct scroll for chat box
     updateScroll();
 
+
     // set chat textbox / button handlers
     document.getElementById("chat-text-box").addEventListener("keydown", function(e) {
         if (e.keyCode == 13 && !e.shiftKey) {
@@ -463,4 +473,18 @@ $(function() {
         }
     });
 
+    // set slider handler
+    if (document.getElementById("slider-input") != null) {
+        document.getElementById("slider-input").onclick = function() {
+            if (document.getElementById("slider-input").checked) {
+                console.log("go stracking");
+                tracking = true;
+                gotoMaster();
+            }
+            else {
+                console.log("stoptracking");
+                tracking = false;
+            }
+        };
+    }
 });

@@ -42,7 +42,7 @@ HTML;
      * Generate page body with PDF library included
      */
 
-    function generatePageWithPDF($body) {
+    function generatePageWithPDF($body, $title) {
         $page = <<<HTML
 <!doctype html>
     <html>
@@ -56,6 +56,7 @@ HTML;
 
             <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/css/lecture-view.css">
         
+            <title>$title</title>
         </head>
         <body>
             <div id="main">

@@ -14,6 +14,7 @@ function generateCodeForm($bool) {
 		
 		<div>
 		<div class ="logo-container">
+		<h1 style="text-decoration:underline">Paruto: Shippuden</h1>
 		<img src="http://cultofthepartyparrot.com/parrots/hd/parrot.gif">
 		</div>
 		<form id="studentForm" action = "{$_SERVER['PHP_SELF']}" method = "post" >
@@ -72,7 +73,7 @@ HTML;
 }
 
 if(isset($_POST['usernameButton'])){ //Code correct and entered a username
-    $_SESSION['studentUsername'] = $_POST['studentName'];
+    $_SESSION['studentUsername'] = trim($_POST['studentName']);
     header('Location: ../lecture/lecture-view.php?'); // Redirects to the lecture view for students
 }
 if (isset($_POST['inputSession']) && isset($_POST['hiddenResult'])) {
@@ -89,7 +90,7 @@ if (isset($_POST['inputSession']) && isset($_POST['hiddenResult'])) {
 		<img src="http://cultofthepartyparrot.com/parrots/hd/parrot.gif">
 		</div>
 		<form action = "{$_SERVER['PHP_SELF']}" method = "post">
-		<input type = "text" id = "inputSession" class = "username" name = "studentName" placeholder="Enter username">
+		<input type = "text" id = "inputSession" class = "username" name = "studentName" placeholder="Enter username" pattern="[A-Za-z]+[A-Za-z ]*" title="Only letters and spaces are allowed" required>
 		
 		<button type = "submit" class = 'btn btn-greyscale' name = "usernameButton">Enter</button>
 		
