@@ -44,19 +44,26 @@
     $pdf_list .= "</ul>";
 
     $form = <<<HTML
+    <div class = "centered">
+    <div class = "upload-form" id = "uploader">
+    <h1 >Download Form</h1>
+    <p>Pick a professor to download all their past pdfs.</p>
+ 
         <form action="{$_SERVER['PHP_SELF']}" method="get">
             <select name="professor">
+            <option value='Default'>Default</option> 
                 $professor_options
             </select>
-            <input type="submit" name="choose_professor" value="Choose Professor">
+            <br><br><br><br><br><br><br>
+            <input type="submit" id = "pickfilez" name="choose_professor" value="Choose Professor">
         </form>
-        <br>
-        <br>
+</div>
+</div>
 HTML;
 
     $backButton = <<<HTML
     <br><br>
-    <a href="/389NGroupProject/pages/home/FrontPage.php"><button>Back to Home</button></a>
+    <a href="/389NGroupProject/pages/home/FrontPage.php" class = "previous">&laquo; Back to home</a>
 HTML;
 
     echo renderPage("Download PDFs", $form . $pdf_list . $backButton);

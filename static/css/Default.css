@@ -306,3 +306,223 @@ p {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     background-clip: padding-box;
 }
+
+
+/* Reset */
+.upload-form,
+.upload-form div,
+.upload-form span,
+.upload-form input,
+.upload-form a,
+.upload-form h1,
+.upload-form p {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+.previous {
+    background-color: #4CAF50;
+    color: white;
+}
+a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+}
+.startLecture {
+    float: right;
+}
+ .dashPdf {
+    text-decoration: none;
+    display: inline-block;
+     padding: 0px 0px;
+}
+a .pdfButton {
+    width: auto;
+    max-width: 300px;
+    margin-bottom: 10px;
+}
+
+a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.centered {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -100px;
+}
+/* Form Container */
+.upload-form {
+    position: relative;
+    z-index: 100;
+    cursor: default;
+    width: 300px;
+    min-height: 180px;
+    padding: 25px 25px 65px 25px;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: url(https://designmodo.com/demo/uploadform/img/upload-bg.png);
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.1) 100%), url(https://designmodo.com/demo/uploadform/img/upload-bg.png);
+    background: -moz-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.1) 100%), url(https://designmodo.com/demo/uploadform/img/upload-bg.png);
+    background: -o-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.1) 100%), url(https://designmodo.com/demo/uploadform/img/upload-bg.png);
+    background: -ms-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.1) 100%), url(https://designmodo.com/demo/uploadform/img/upload-bg.png);
+    background: linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.1) 100%), url(https://designmodo.com/demo/uploadform/img/upload-bg.png);
+}
+
+/* Clear Floats */
+.upload-form .cb { clear: both; }
+
+/* Form Title */
+.upload-form h1 {
+    font-family: 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #f6f6f6;
+    text-shadow: 0px 1px 1px rgba(0,0,0, .65);
+    padding-bottom: 2px;
+    border-bottom: 1px solid #7a7b80;
+}
+
+/* Replace Title with Image */
+.upload-form h1.replace-text {
+    display: block;
+    width: 100%;
+    height: 17px;
+    padding-bottom: 7px;
+    text-indent: -9999px;
+    background: url(https://designmodo.com/demo/uploadform/img/title.png) no-repeat left center;
+}
+
+/* Close Button */
+.upload-form .close {
+    position: absolute;
+    display: block;
+    width: 12px;
+    height: 12px;
+    top: 28px;
+    right: 24px;
+}
+
+/* Paragraph */
+.upload-form p {
+    padding: 10px 0;
+    font-family: sans-serif;
+    font-size: 12px;
+    color: #a4a5a8;
+}
+
+/* Select &amp;amp; Upload Buttons */
+.upload-form .button {
+    display: inline-block;
+    height: 30px;
+    margin: 15px 0;
+
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #777;
+
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 30px;
+
+    background: #ffffff;
+    background: -webkit-linear-gradient(top, #ffffff 0%, #f6f6f6 100%);
+    background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 100%);
+    background: -o-linear-gradient(top, #ffffff 0%, #f6f6f6 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%, #f6f6f6 100%);
+    background: linear-gradient(top, #ffffff 0%, #f6f6f6 100%);
+}
+
+.upload-form .button:hover {
+    background: #f2f2f2;
+    background: -webkit-linear-gradient(top, #f2f2f2 0%, #eaeaea 100%);
+    background: -moz-linear-gradient(top, #f2f2f2 0%, #eaeaea 100%);
+    background: -o-linear-gradient(top, #f2f2f2 0%, #eaeaea 100%);
+    background: -ms-linear-gradient(top, #f2f2f2 0%, #eaeaea 100%);
+    background: linear-gradient(top, #f2f2f2 0%, #eaeaea 100%);
+}
+.labelUpload {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    display: inline-block
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+.upload-form #pickfilez {
+    width: 200px;
+    float: left;
+    border-right: 1px solid #999;
+
+    -webkit-border-radius: 3px 0 0 3px;
+    -moz-border-radius: 3px 0 0 3px;
+    border-radius: 3px 0 0 3px;
+}
+.upload-form #pickfiles {
+    width: 99px;
+    float: left;
+    border-right: 1px solid #999;
+
+    -webkit-border-radius: 3px 0 0 3px;
+    -moz-border-radius: 3px 0 0 3px;
+    border-radius: 3px 0 0 3px;
+}
+
+.upload-form #uploadfiles {
+    width: 100px;
+    float: right;
+
+    -webkit-border-radius: 0 3px 3px 0;
+    -moz-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0;
+}
+button.button1{
+    float:right;
+    width: auto;
+    background:#1AAB8A;
+    color:#fff;
+    border:none;
+    position:relative;
+    height:40px;
+    font-size:1em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+}
+button.button1:hover{
+    background:#fff;
+    color:#1AAB8A;
+}
+button.button1:before,button.button1:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #1AAB8A;
+    transition:400ms ease all;
+}
+button.button1:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+button.button1:hover:before,button.button1:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}

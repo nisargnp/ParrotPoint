@@ -60,11 +60,11 @@
             $pdf_options
         </select>
         <input type="hidden" name="code" value="$code" />
-        <input type="button" onclick="makeRoom();" value="Start lecture" /> <br />
+        <button  class = "button button1" onclick="makeRoom();" value="Start lecture" >Start Lecture</button> <br />
     </form>
     <br />
     <br />
-    <a href="/389NGroupProject/pages/upload/PDFUpload.php"><button>PDF Upload</button></a>
+    <a class = "dashPdf" href="/389NGroupProject/pages/upload/PDFUpload.php"><button class = "pdfButton">PDF Upload</button></a>
 </div>
 <script>
     var conn = new WebSocket('ws://localhost:3001');

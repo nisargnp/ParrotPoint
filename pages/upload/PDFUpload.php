@@ -60,14 +60,20 @@
 	}
 
 	$form = <<<HTML
+	<div class = "centered">
+    <div class = "upload-form" id = "uploader">
+    <h1 class="replace-text">Select PDF</h1>
+    <p>Choose a pdf to upload</p>
+ 
 	<form action="{$_SERVER['PHP_SELF']}" enctype="multipart/form-data" method="post">
-		<strong>Select a PDF to upload: </strong><br>
-		<input type="file" name="uploaded_file"><br><br>
-
-		<input type="submit" value="Upload" name="upload">
+        <input type="file" name="uploaded_file" class = "labelUpload">
+		<br><br><br><br>
+		<input type="submit" id = "pickfilez" value="Upload" name="upload">
 	</form>
+	</div>
+	</div>
 	<br><br>
-	<a href="/389NGroupProject/pages/professor/dashboard.php"><button>Back to Dashboard</button></a>
+	<a href="/389NGroupProject/pages/professor/dashboard.php" class = "previous">&laquo; Back to dashboard</a>
 HTML;
 	$body = $form . $body;
 
