@@ -20,8 +20,10 @@
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-                <link href="/389NGroupProject/static/dist/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-                <link rel="stylesheet" href="/389NGroupProject/static/css/Default.css" type="text/css" />
+                <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/dist/bootstrap/css/bootstrap.min.css">
+                <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/css/Default.css">
+
+                <script type='text/javascript' src="/389NGroupProject/static/js/websocket-addr.js"></script>
 
                 <title>{$title}</title>
             </head>
@@ -30,8 +32,8 @@
                 <div ng-view>
                     {$body}
                 </div>
-                    <script src="/389NGroupProject/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
-                    <script src="/389NGroupProject/static/dist/bootstrap/js/bootstrap.min.js"></script>
+                    <script type='text/javascript' src="/389NGroupProject/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
+                    <script type='text/javascript' src="/389NGroupProject/static/dist/bootstrap/js/bootstrap.min.js"></script>
             </body>
 </html>
 HTML;
@@ -47,13 +49,12 @@ HTML;
 <!doctype html>
     <html>
         <head>
-            <script src="/389NGroupProject/static/dist/Chart.bundle.min.js"></script>
+            <script type='text/javascript' src="/389NGroupProject/static/dist/pdf.js"></script>
+            <script type='text/javascript' src="/389NGroupProject/static/dist/pdf.worker.js"></script>
+            <script type='text/javascript' src="/389NGroupProject/static/dist/Chart.bundle.min.js"></script>
+            <script type='text/javascript' src="/389NGroupProject/static/js/websocket-addr.js"></script>
 
-            <script src="/389NGroupProject/static/dist/pdf.js"></script>
-            <script src="/389NGroupProject/static/dist/pdf.worker.js"></script>
-
-            <link href="/389NGroupProject/static/dist/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+            <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/dist/bootstrap/css/bootstrap.min.css">
             <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/css/lecture-view.css">
         
             <title>$title</title>
@@ -63,9 +64,9 @@ HTML;
                 $body
             </div>
 
-            <script src="/389NGroupProject/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
-            <script src="/389NGroupProject/static/dist/bootstrap/js/bootstrap.min.js"></script>
-            <script src="/389NGroupProject/static/dist/download.js"></script>
+            <script type='text/javascript' src="/389NGroupProject/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
+            <script type='text/javascript' src="/389NGroupProject/static/dist/bootstrap/js/bootstrap.min.js"></script>
+            <script type='text/javascript' src="/389NGroupProject/static/dist/download.js"></script>
             <script type='text/javascript' src="/389NGroupProject/static/js/lecture-view.js"></script>
 
         </body>
