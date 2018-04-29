@@ -17,6 +17,7 @@ function generateCodeForm($bool) {
 		<h1 style="text-decoration:underline">Paruto: Shippuden</h1>
 		<img src="http://cultofthepartyparrot.com/parrots/hd/parrot.gif">
 		</div>
+		
 		<form id="studentForm" action = "{$_SERVER['PHP_SELF']}" method = "post" >
 		<input type = "text" id = "inputSession" class = "$validClass" name = "inputSession" placeholder="$placeholder">
 		<input type="hidden" id="hiddenResult" name="hiddenResult" value=""/>
