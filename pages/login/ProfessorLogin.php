@@ -19,23 +19,27 @@
 			// header("Location: ");
 		}
 	}
-	// process sign up
-	if (isset($_POST["signup"])) {
-		header("Location: ProfessorSignup.php");
-	}
 
-	$body = <<<BODY
-		<h1>Professor Sign In</h1>
-		<form action="{$_SERVER['PHP_SELF']}" method="post">
-			Username: <input type="text" name="username"><br><br>
-			Password: <input type="password" name="password"><br><br>
+	$body = <<<HTML
+		<div class = "join-view vertical-alignment-wrapper vertical-alignment-wrapper__center">
 
-			<input type="submit" value="Log In" name="login">
-			<input type="submit" value="Sign Up" name="signup">
-		</form><br>
-		
-		<strong>$bottom_text</strong>
-BODY;
+			<h1>Professor Sign In</h1>
+			<form action="{$_SERVER['PHP_SELF']}" method="post">
+				<h4>Username:</h4>
+				<input type="text" name="username">
+
+				<h4>Password:</h4> 
+				<input type="password" name="password"><br><br>
+
+				<input type="submit" value="Log In" name="login" class='btn'>
+				<br><br>
+
+				<a href="ProfessorSignup.php"><h5>Don't have an account?</h5></a>
+			</form><br>
+			
+			<strong>$bottom_text</strong>
+		</div>
+HTML;
 
 	echo renderPage("Professor Sign In", $body);
 
