@@ -14,9 +14,10 @@ function generateCodeForm($bool) {
 		
 		<div>
 		<div class ="logo-container">
-		<h1 style="text-decoration:underline">Paruto: Shippuden</h1>
+		<h1 style="text-decoration:underline">ParrotPoint</h1>
 		<img src="http://cultofthepartyparrot.com/parrots/hd/parrot.gif">
 		</div>
+		
 		<form id="studentForm" action = "{$_SERVER['PHP_SELF']}" method = "post" >
 		<input type = "text" id = "inputSession" class = "$validClass" name = "inputSession" placeholder="$placeholder">
 		<input type="hidden" id="hiddenResult" name="hiddenResult" value=""/>
@@ -43,7 +44,7 @@ function generateCodeForm($bool) {
 	</div>
 
 	<script>
-		var conn = new WebSocket('ws://localhost:3001');
+		var conn = new WebSocket(WEBSOCKET_ADDR);
 
 		conn.onmessage = function(e) {
 			console.log(e.data);
@@ -87,6 +88,7 @@ if (isset($_POST['inputSession']) && isset($_POST['hiddenResult'])) {
 		
 		<div>
 		<div class ="logo-container">
+		<h1 style="text-decoration:underline">ParrotPoint</h1>
 		<img src="http://cultofthepartyparrot.com/parrots/hd/parrot.gif">
 		</div>
 		<form action = "{$_SERVER['PHP_SELF']}" method = "post">
@@ -123,7 +125,7 @@ else {
     $body = generateCodeForm(true);
 }
 
-echo renderPage("Home page", $body);
+echo renderPage("Home Page", $body);
 
 
 ?>

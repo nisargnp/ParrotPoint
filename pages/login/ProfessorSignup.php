@@ -26,18 +26,27 @@
 		}
 	}
 
-	$body = <<<BODY
-		<h1>Create your Account</h1>
-		<form action="{$_SERVER['PHP_SELF']}" method="post">
-			Name: <input type="text" name="professor_name"><br><br>
-			Username: <input type="text" name="professor_username"><br><br>
-			Password: <input type="password" name="professor_password"><br><br>
+	$body = <<<HTML
+		<div class="join-view vertical-alignment-wrapper vertical-alignment-wrapper__center">
+			<h1>Create Your Account</h1>
+			<form action="{$_SERVER['PHP_SELF']}" method="post">
+				<h4>Name:</h4>
+				<input type="text" name="professor_name">
 
-			<input type="submit" value="Register" name="register">
-		</form><br>
-		
-		<strong>$bottom_text</strong>
-BODY;
+				<h4>Username:</h4> 
+				<input type="text" name="professor_username">
+
+				<h4>Password:</h4>
+				<input type="password" name="professor_password">
+
+				<br><br>
+				<input type="submit" value="Register" name="register" class="btn">
+			</form>
+
+			<br>
+			<strong>$bottom_text</strong>
+		</div>
+HTML;
 	
 	echo renderPage("Create your Account", $body);
 

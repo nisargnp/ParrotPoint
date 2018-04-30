@@ -38,12 +38,12 @@
 					$results = dbQuery("insert into pdfs (filename, uploader, pdf, code) values ('$filename', '$uploader', '$pdf', '$code')");
 				}
 
-				$body .= "File upload complete"; // file upload success
+				$body .= "<h3>File upload complete</h3>"; // file upload success
 
 			} catch (Exception $e) {
 
 				$errmsg = $e->getMessage();
-				$body .= "Error $errmsg"; // file upload success
+				$body .= "<h3>Error $errmsg</h3>"; // file upload success
 
 			} finally {
 

@@ -64,6 +64,7 @@ HTML;
     $backButton = <<<HTML
     <br><br>
     <a href="/389NGroupProject/pages/home/FrontPage.php" class = "previous">&laquo; Back to home</a>
+    <br><br><br>
 HTML;
 
-    echo renderPage("Download PDFs", $form . $pdf_list . $backButton);
+    echo renderPage("Download PDFs", $form . $backButton. $pdf_list);

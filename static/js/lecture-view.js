@@ -298,7 +298,7 @@ function createAndDisplayGraph(results, labels) {
 $(function() {
     // set up websocket
     // Setup Web Socket
-    conn = new WebSocket('ws://localhost:3001');
+    conn = new WebSocket(WEBSOCKET_ADDR);
 
 
     conn.onmessage = function(e) {

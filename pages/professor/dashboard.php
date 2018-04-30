@@ -67,7 +67,7 @@
     <a class = "dashPdf" href="/389NGroupProject/pages/upload/PDFUpload.php"><button class = "pdfButton">PDF Upload</button></a>
 </div>
 <script>
-    var conn = new WebSocket('ws://localhost:3001');
+    var conn = new WebSocket(WEBSOCKET_ADDR);
 
     conn.onmessage = function(e) {
         console.log(e.data);
