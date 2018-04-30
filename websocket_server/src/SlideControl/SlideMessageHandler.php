@@ -122,9 +122,6 @@
 						$conn->send("polling:stop");
 						$polling_results = $this->room_list[$code]->getResults();
 
-						// todo: remove hardcode
-						//$polling_results = Array(1,12,7,3);
-
 						$conn->send("polling:results:" . json_encode($polling_results));
 					}
 				}

@@ -313,7 +313,7 @@ $(function() {
         } 
 
         else if (header == "bad-room") {
-            //document.getElementById("main").innerHTML = "<h1>Bad code given</h1>";
+            document.getElementById("main").innerHTML = "<h1>Bad code given</h1>";
         }
 
         // polling
@@ -477,12 +477,10 @@ $(function() {
     if (document.getElementById("slider-input") != null) {
         document.getElementById("slider-input").onclick = function() {
             if (document.getElementById("slider-input").checked) {
-                console.log("go stracking");
                 tracking = true;
                 gotoMaster();
             }
             else {
-                console.log("stoptracking");
                 tracking = false;
             }
         };
