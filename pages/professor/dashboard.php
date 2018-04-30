@@ -29,8 +29,6 @@
     foreach ($pdfNames as $pdf) {
         $pdf_options .= "<option value='$pdf'>$pdf</option>";
     }
-    $pdf_options .= "<option value ='Default'>Default</option>";
-
 
     $sid = session_id();
 

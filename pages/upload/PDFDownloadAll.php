@@ -22,6 +22,7 @@
     if (isset($_GET["choose_professor"])) {
         
         $professor = $_GET["professor"];
+        $prof_title = "<h2>Available Slides for $professor:</h2>";
 
         $query = "select filename from pdfs where uploader='$professor'";
         $result = $db_connection->query($query);
@@ -40,6 +41,7 @@
             
         }
 
+        $pdf_list = $prof_title . $pdf_list;
     }
     $pdf_list .= "</ul>";
 
@@ -51,7 +53,6 @@
  
         <form action="{$_SERVER['PHP_SELF']}" method="get">
             <select name="professor">
-            <option value='Default'>Default</option> 
                 $professor_options
             </select>
             <br><br><br><br><br><br><br>
