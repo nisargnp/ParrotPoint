@@ -20,10 +20,10 @@
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-                <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/dist/bootstrap/css/bootstrap.min.css">
-                <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/css/Default.css">
+                <link rel="stylesheet" type="text/css" href="/ParrotPoint/static/dist/bootstrap/css/bootstrap.min.css">
+                <link rel="stylesheet" type="text/css" href="/ParrotPoint/static/css/Default.css">
 
-                <script type='text/javascript' src="/389NGroupProject/static/js/websocket-addr.js"></script>
+                <script type='text/javascript' src="/ParrotPoint/static/js/websocket-addr.js"></script>
 
                 <title>{$title}</title>
             </head>
@@ -32,8 +32,8 @@
                 <div ng-view>
                     {$body}
                 </div>
-                    <script type='text/javascript' src="/389NGroupProject/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
-                    <script type='text/javascript' src="/389NGroupProject/static/dist/bootstrap/js/bootstrap.min.js"></script>
+                    <script type='text/javascript' src="/ParrotPoint/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
+                    <script type='text/javascript' src="/ParrotPoint/static/dist/bootstrap/js/bootstrap.min.js"></script>
             </body>
 </html>
 HTML;
@@ -49,13 +49,13 @@ HTML;
 <!doctype html>
     <html>
         <head>
-            <script type='text/javascript' src="/389NGroupProject/static/dist/pdf.js"></script>
-            <script type='text/javascript' src="/389NGroupProject/static/dist/pdf.worker.js"></script>
-            <script type='text/javascript' src="/389NGroupProject/static/dist/Chart.bundle.min.js"></script>
-            <script type='text/javascript' src="/389NGroupProject/static/js/websocket-addr.js"></script>
+            <script type='text/javascript' src="/ParrotPoint/static/dist/pdf.js"></script>
+            <script type='text/javascript' src="/ParrotPoint/static/dist/pdf.worker.js"></script>
+            <script type='text/javascript' src="/ParrotPoint/static/dist/Chart.bundle.min.js"></script>
+            <script type='text/javascript' src="/ParrotPoint/static/js/websocket-addr.js"></script>
 
-            <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/dist/bootstrap/css/bootstrap.min.css">
-            <link rel="stylesheet" type="text/css" href="/389NGroupProject/static/css/lecture-view.css">
+            <link rel="stylesheet" type="text/css" href="/ParrotPoint/static/dist/bootstrap/css/bootstrap.min.css">
+            <link rel="stylesheet" type="text/css" href="/ParrotPoint/static/css/lecture-view.css">
         
             <title>$title</title>
         </head>
@@ -64,10 +64,10 @@ HTML;
                 $body
             </div>
 
-            <script type='text/javascript' src="/389NGroupProject/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
-            <script type='text/javascript' src="/389NGroupProject/static/dist/bootstrap/js/bootstrap.min.js"></script>
-            <script type='text/javascript' src="/389NGroupProject/static/dist/download.js"></script>
-            <script type='text/javascript' src="/389NGroupProject/static/js/lecture-view.js"></script>
+            <script type='text/javascript' src="/ParrotPoint/static/dist/bootstrap/jquery-3.2.1.min.js"></script>
+            <script type='text/javascript' src="/ParrotPoint/static/dist/bootstrap/js/bootstrap.min.js"></script>
+            <script type='text/javascript' src="/ParrotPoint/static/dist/download.js"></script>
+            <script type='text/javascript' src="/ParrotPoint/static/js/lecture-view.js"></script>
 
         </body>
 

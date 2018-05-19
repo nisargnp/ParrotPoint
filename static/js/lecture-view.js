@@ -410,7 +410,7 @@ $(function() {
         else if (header == "room-info") {
             console.log("room-info");
             [_, professorName, pdfName] = e.data.split(":", 3);
-            defaultPDFUrl = "/389NGroupProject/pages/upload/PDFDownload.php?uploader=" + professorName + "&filename=" + pdfName;
+            defaultPDFUrl = "/ParrotPoint/pages/upload/PDFDownload.php?uploader=" + professorName + "&filename=" + pdfName;
             console.log("professorName: " + professorName);
             console.log("pdfName: " + pdfName);
             console.log("defaultPDFUrl: " + defaultPDFUrl);

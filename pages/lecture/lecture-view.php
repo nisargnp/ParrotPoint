@@ -88,7 +88,7 @@ HTML;
             <!-- nothing for student -->
             $polling_option
             <li role="separator" class="divider"></li>
-            <li><a href="/389NGroupProject/pages/home/FrontPage.php">Exit</a></li>
+            <li><a href="/ParrotPoint/pages/home/FrontPage.php">Exit</a></li>
         </ul>
     </div>
 </div>

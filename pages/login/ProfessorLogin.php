@@ -4,7 +4,7 @@
 
 	// if login session found, just redirect to dashboard
 	if (isset($_SESSION['username'])) {
-		header("Location: /389NGroupProject/pages/professor/dashboard.php");
+		header("Location: /ParrotPoint/pages/professor/dashboard.php");
 	}
 
 	$bottom_text = "";
@@ -22,7 +22,7 @@
 		else {
 			// TODO: redirect on success
 			$_SESSION['username'] = $_POST['username'];
-			header("Location: /389NGroupProject/pages/professor/dashboard.php");
+			header("Location: /ParrotPoint/pages/professor/dashboard.php");
 		}
 	}
 

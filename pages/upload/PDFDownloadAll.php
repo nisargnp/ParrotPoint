@@ -64,7 +64,7 @@ HTML;
 
     $backButton = <<<HTML
     <br><br>
-    <a href="/389NGroupProject/pages/home/FrontPage.php" class = "previous">&laquo; Back to home</a>
+    <a href="/ParrotPoint/pages/home/FrontPage.php" class = "previous">&laquo; Back to home</a>
     <br><br><br>
 HTML;
 

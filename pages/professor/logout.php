@@ -6,6 +6,6 @@ session_start();
 if(isset($_SESSION['username'])){
     unset($_SESSION['username']);
 }
-header("Location: /389NGroupProject/pages/home/FrontPage.php?");
+header("Location: /ParrotPoint/pages/home/FrontPage.php?");
 
 ?>

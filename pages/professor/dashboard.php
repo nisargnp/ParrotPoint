@@ -10,7 +10,7 @@
         $_SESSION['studentUsername'] = $professorName; // shouldn't this be professor_name?
         $_SESSION['code'] = $_POST["code"];
         $_SESSION['isProfessor'] = true;
-        header("Location: /389NGroupProject/pages/lecture/lecture-view.php");
+        header("Location: /ParrotPoint/pages/lecture/lecture-view.php");
     }
 
     // query DB to get available PDFs for professor
@@ -62,7 +62,7 @@
     </form>
     <br />
     <br />
-    <a class = "dashPdf" href="/389NGroupProject/pages/upload/PDFUpload.php"><button class = "pdfButton">PDF Upload</button></a>
+    <a class = "dashPdf" href="/ParrotPoint/pages/upload/PDFUpload.php"><button class = "pdfButton">PDF Upload</button></a>
 </div>
 <script>
     var conn = new WebSocket(WEBSOCKET_ADDR);
@@ -91,7 +91,7 @@ HTML;
     if (isset($_SESSION['username'])) {
         echo renderPage("Dashboard", $body);
     } else {
-        header("Location: /389NGroupProject/pages/login/ProfessorLogin.php");
+        header("Location: /ParrotPoint/pages/login/ProfessorLogin.php");
     }
 
 ?>

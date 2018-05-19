@@ -4,7 +4,7 @@
 	// if login session found, just redirect to dashboard
 	session_start();
 	if (isset($_SESSION['username'])) {
-		header("Location: /389NGroupProject/pages/professor/dashboard.php");
+		header("Location: /ParrotPoint/pages/professor/dashboard.php");
 	}
 
 	$bottom_text = "";
@@ -22,7 +22,7 @@
 			$results = dbQuery("insert into professors values ('$username', '$name', '$password')");
 
 			$_SESSION['username'] = $username;
-			header("Location: /389NGroupProject/pages/professor/dashboard.php");
+			header("Location: /ParrotPoint/pages/professor/dashboard.php");
 		}
 	}
 

@@ -73,14 +73,14 @@
 	</div>
 	</div>
 	<br><br>
-	<a href="/389NGroupProject/pages/professor/dashboard.php" class = "previous">&laquo; Back to dashboard</a>
+	<a href="/ParrotPoint/pages/professor/dashboard.php" class = "previous">&laquo; Back to dashboard</a>
 HTML;
 	$body = $form . $body;
 
 	if (isset($_SESSION['username'])) {
 		echo renderPage("PDF Upload", $body);
 	} else {
-		header("Location: /389NGroupProject/pages/login/ProfessorLogin.php");
+		header("Location: /ParrotPoint/pages/login/ProfessorLogin.php");
 	}
 ?>
 
